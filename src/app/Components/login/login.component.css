@@ -105,3 +105,6 @@ input.example-right-align::-webkit-outer-spin-button,
 input.example-right-align::-webkit-inner-spin-button {
   display: none;
 }
+.btn{
+  width: 100%;
+}

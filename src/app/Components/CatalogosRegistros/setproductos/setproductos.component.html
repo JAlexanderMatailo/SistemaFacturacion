@@ -1,0 +1,43 @@
+<div class="contenedorCentral">
+    <h1>{{tittle}}</h1>
+    <div class="colmuns">
+        <div class="izq">
+            <label>Código del registro:</label>
+            <input type="text" class="form-control" mat-input placeholder="Ej. 00001"
+                [(ngModel)]="producto.Codigo" />
+                <form [formGroup]="productForm" class="matcardContent">
+                <mat-form-field class="inputsloggin">
+                    <mat-label>Codigo del producto</mat-label>
+                    <input type="user" matInput formControlName="productosS" [errorStateMatcher]="matcher"
+                        placeholder="Ex. usuario" [(ngModel)]="producto.Codigo">
+                    <mat-hint>Nombre de usuario</mat-hint>
+                    <mat-error *ngIf="productForm.get('productosS')?.hasError('required')">
+                        Ingrese el <strong>usuario</strong>
+                    </mat-error>
+                </mat-form-field>
+            </form>
+            <label>Descripcion del producto:</label>
+            <input type="text" class="form-control" mat-input placeholder="Ej. producto"
+                [(ngModel)]="producto.Nombre" />
+
+            <label>Precio:</label>
+            <input type="text" class="form-control" mat-input placeholder="Ej. 10.00"
+                [(ngModel)]="producto.Precio" />
+
+            <label>Fecha de Registro:</label>
+            <input type="text" class="form-control" mat-input placeholder="Fecha Actual"
+                [(ngModel)]="producto.FechaCreacion" />
+        </div>
+        
+    </div>
+    <div class="piepage">
+        <div class="cancel">
+            <button class="btn btn-danger w-100" (click)="Cancelar()">Cancelar</button>
+        </div>
+        <div class="register">
+            <button class="btn btn-primary w-100" (click)="SetProducto()">Guardar</button>
+        </div>
+    </div>
+
+
+</div>

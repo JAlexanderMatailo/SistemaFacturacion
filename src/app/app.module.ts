@@ -22,6 +22,12 @@ import {MatCardModule} from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
 import { DocumentosComponent } from './Components/Documentos/documentos/documentos.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import{MatPaginatorModule} from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { SetproductosComponent } from './Components/CatalogosRegistros/setproductos/setproductos.component';
+import { SetclientesComponent } from './Components/CatalogosRegistros/setclientes/setclientes.component';
+import {MatDialogModule}from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -33,6 +39,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     LoginComponent,
     NavigationfacturacionComponent,
     DocumentosComponent,
+    SetproductosComponent,
+    SetclientesComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +57,11 @@ import { MatTabsModule } from '@angular/material/tabs';
     ReactiveFormsModule,
     MatCardModule,
     HttpClientModule,
-    MatTabsModule
+    MatTabsModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
+    MatDialogModule
     
   ],
   providers: [],
