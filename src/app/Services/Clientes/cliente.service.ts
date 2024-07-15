@@ -6,30 +6,30 @@ import { environment } from 'src/app/Environments/environment.development';
 @Injectable({
   providedIn: 'root'
 })
-export class ProductosService {
+export class ClienteService {
   urlBase = environment.urlBase
-  productos = 'Producto/'
+  clientesS = 'Cliente/'
   constructor( private http : HttpClient ) { }
 
-  SetProducto(data:any){
-    return this.http.post<any>(this.urlBase+this.productos+'SetProductos', data);
+  setClientes(data:any){
+    return this.http.post<any>(this.urlBase+this.clientesS+'SetCliente', data);
   }
 
-  getAllProductos(){
+  getAllClientes(){
     let header = new HttpHeaders()
     .set('Type-content','aplication/json')
-    return this.http.get<any>(this.urlBase+this.productos+'GetProductosHistory');
+    return this.http.get<any>(this.urlBase+this.clientesS+'GetClientes');
   }
-  UpdateProduct(data: any){
-    return this.http.post<any>(this.urlBase+this.productos+'UpdateProduct',data);
+  UpdateCliente(data: any){
+    return this.http.post<any>(this.urlBase+this.clientesS+'UpdateCliente',data);
   }
-  deleteProducto(id:number):Observable<any>{
+  deleteCliente(id:number):Observable<any>{
     const product ={
       id
     }
     let params = new HttpParams()
     .append("IdProducto", product.id)
     let headers = new HttpHeaders().set('Type-content','aplication/json')
-    return this.http.post<any>(this.urlBase+this.productos+'DeleteProducto',product, { headers, params});
+    return this.http.post<any>(this.urlBase+this.clientesS+'DeleteCliente',product, { headers, params});
   }
 }

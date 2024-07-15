@@ -1,13 +1,13 @@
 <div class="container">
     <div class="header">
         <div class="search">
-            <mat-form-field class="formField">
+            <mat-form-field class="formField inputsloggin">
                 <mat-label>Buscar en la tabla</mat-label>
                 <input matInput (keyup)="applyFilter($event)" placeholder="Ej. 00001" #input>
             </mat-form-field>
         </div>
         <div class="setBtn">
-            <button mat-raised-button class="btn" mat-button (click)="setProdutos()" value="Login">Registrar Nuevo
+            <button mat-raised-button class="btn" mat-button (click)="setProductos()" value="Login">Registrar Nuevo
                 Producto</button>
         </div>
 
@@ -46,8 +46,8 @@
                 <th class="mat-header-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad de Productos en
                     Stock </th>
                 <td class="mat-cell" mat-cell *matCellDef="let row"> {{row.stock}}
-                    <button mat-raised-button mat-button>
-                        <mat-icon>plus</mat-icon>
+                    <button class="tableBtn" mat-button (click)="setProduct(row)">
+                        <mat-icon>add</mat-icon>
                     </button>
                 </td>
             </ng-container>
@@ -63,6 +63,16 @@
                 <th class="mat-header-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Ingreso </th>
                 <td class="mat-cell" mat-cell *matCellDef="let row"> {{row.fechaCreacion}} </td>
             </ng-container>
+
+            <ng-container matColumnDef="Acciones">
+                <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                <td mat-cell *matCellDef="let element" style="flex-direction: column;">
+                  <button class="btnF btn-success" style="margin-right: 2px"
+                    (click)="UpdateProducto(element)"><mat-icon>edit</mat-icon></button>
+                  <button class="btnF btn-danger" (click)="DeleteProducto(element)"><mat-icon>delete</mat-icon></button>
+                 
+                </td>
+              </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

@@ -1,1 +1,69 @@
-<p>setclientes works!</p>
+<div class="contenedorCentral">
+    <div class="colmuns">
+        <h1>{{tittle}}</h1>
+        <div class="izq">
+            
+            <form [formGroup]="productForm" class="matcardContent">
+                <mat-form-field class="inputsloggin">
+                    <mat-label>Identificacion del cliente</mat-label>
+                    <input type="text" matInput formControlName="productosS" [errorStateMatcher]="matcher"
+                        placeholder="Ej. 123456789..." [(ngModel)]="clienteReq.RucDni" (input)="onCedulaInputChange($event)" maxlength="15">
+                    <mat-hint>Codigo unico del cliete</mat-hint>
+                    <mat-error *ngIf="productForm.get('productosS')?.hasError('required')">
+                        Ingrese el <strong>número</strong> de Identificación
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="inputsloggin">
+                    <mat-label>Nombres y Aplellidos:</mat-label>
+                    <input type="text" matInput formControlName="dsProducto" [errorStateMatcher]="matcher"
+                        placeholder="Ej. producto" [(ngModel)]="clienteReq.Nombre">
+                    <mat-hint>Ingresa los nombres y Aplellidos del cliente</mat-hint>
+                    <mat-error *ngIf="productForm.get('dsProducto')?.hasError('required')">
+                        Ingrese los <strong>nombrea</strong> del cliente
+                    </mat-error>
+                </mat-form-field>
+                
+                <mat-form-field class="inputsloggin">
+                    <mat-label>Direccion</mat-label>
+                    <span matPrefix>$&nbsp;</span>
+                    <input type="text" matInput formControlName="preProducto" [errorStateMatcher]="matcher" appOnlyNumbersWithDecimal
+                        placeholder="Ej. 00.00" [(ngModel)]="clienteReq.Direccion">
+                    <mat-hint>Ingrese una dirección</mat-hint>
+                    <mat-error *ngIf="productForm.get('preProducto')?.hasError('required')">
+                        Debe agregar la <strong>Direcion</strong> del cliente
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="inputsloggin">
+                    <mat-label>Correo:</mat-label>
+                    <input type="date" matInput formControlName="fRegistro" [errorStateMatcher]="matcher"
+                        placeholder="Fecha Actual" [(ngModel)]="clienteReq.Correo ">
+                    <mat-hint>Fecha del dia</mat-hint>
+                    <mat-error *ngIf="productForm.get('fRegistro')?.hasError('required')">
+                        Ingrese un <strong>Correo</strong>
+                    </mat-error>
+                </mat-form-field>
+
+            </form>
+        </div>
+        <div class="izq">
+            <div class="piepage">
+                <div class="cancel">
+                    <button mat-raised-button class="btn" mat-button (click)="Cancelar()" value="Login">
+                        Cancelar</button>
+                    <!-- <button class="btn btn-danger w-100" (click)="Cancelar()">Cancelar</button> -->
+                </div>
+                <div class="register">
+                    <button mat-raised-button class="btn" mat-button (click)="SetProducto()" value="Login">
+                        Guardar</button>
+                    <!-- <button class="btn btn-primary w-100" (click)="SetProducto()">Guardar</button> -->
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+
+
+</div>

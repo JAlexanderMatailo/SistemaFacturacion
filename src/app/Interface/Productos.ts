@@ -11,6 +11,7 @@ export interface ProductoVMResponse {
 }
 
 export interface ProductoVMRequest {
+    idProducto : number
     Codigo: string;
     Nombre: string;
     Precio: number; 

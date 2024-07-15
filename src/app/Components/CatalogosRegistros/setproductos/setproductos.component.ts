@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, inject, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { map, Observable, shareReplay } from 'rxjs';
 import { MensajesVM } from 'src/app/Interface/Mensajeria';
 import { ProductoVMRequest } from 'src/app/Interface/Productos';
 import { ProductosService } from 'src/app/Services/Prodcutos/productos.service';
@@ -14,7 +16,16 @@ import Swal from 'sweetalert2'
 })
 export class SetproductosComponent {
   tittle: string = "INGRESAR DATOS DE REGISTRO";
+
+  private breakpointObserver = inject(BreakpointObserver);
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
+
   producto: ProductoVMRequest = {
+    idProducto: 0,
     Codigo: "",
     Nombre: "",
     Precio: 0.0,
@@ -34,6 +45,7 @@ export class SetproductosComponent {
   constructor(private matDialog: MatDialog,
     private productos: ProductosService,
     private fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: ProductoVMRequest
   ) {
     this.productForm = this.fb.group({
       productosS: ['', Validators.required],
@@ -42,29 +54,57 @@ export class SetproductosComponent {
       fRegistro: ['', Validators.required],
     });
   }
-
+  ngOnInit(): void {
+    this.obtenerDatos();
+  }
   Cancelar() {
     this.matDialog.closeAll();
+  }
+  obtenerDatos() {
+    console.log("Llegó data: ", this.data);
+    if (this.data != null) {
+      this.producto = { ...this.data }; // Copia los datos recibidos a producto
+    }
   }
   SetProducto() {
 
     if (this.validarCampos()) {
-      this.productos.SetProducto(this.producto).subscribe(resp => {
-        if (resp) {
-          Swal.fire({
-            title: "Excelente!",
-            text: `${resp.mensajeDescripcion}: ${this.producto?.Nombre +' ' + 'con el código:'+ ' ' + this.producto?.Codigo}`,
-            icon: "success",
-            confirmButtonColor: "rgb(10, 83, 58)",
-            confirmButtonText: "Aceptar",
-            showCloseButton: true
-          });
-          this.matDialog.closeAll();
-        } else {
-          this.mensajeria = resp
-          Swal.fire("Ups!", "No se pudo registrar el producto, debido a: " + this.mensajeria.mensajeDescripcion, "error");
-        }
-      })
+      if(this.producto.idProducto === 0){
+        this.productos.SetProducto(this.producto).subscribe(resp => {
+          if (resp) {
+            Swal.fire({
+              title: "Excelente!",
+              text: `${resp.mensajeDescripcion}: ${this.producto?.Nombre +' ' + 'con el código:'+ ' ' + this.producto?.Codigo}`,
+              icon: "success",
+              confirmButtonColor: "rgb(10, 83, 58)",
+              confirmButtonText: "Aceptar",
+              showCloseButton: true
+            });
+            this.matDialog.closeAll();
+          } else {
+            this.mensajeria = resp
+            Swal.fire("Ups!", "No se pudo registrar el producto, debido a: " + this.mensajeria.mensajeDescripcion, "error");
+          }
+        })
+      }else{
+        this.productos.UpdateProduct(this.producto).subscribe(resp => {
+          if (resp) {
+            Swal.fire({
+              title: "Excelente!",
+              text: `${resp.mensajeDescripcion}: ${this.producto?.Nombre +' ' + 'con el código:'+ ' ' + this.producto?.Codigo}`,
+              icon: "success",
+              confirmButtonColor: "rgb(10, 83, 58)",
+              confirmButtonText: "Aceptar",
+              showCloseButton: true
+            });
+            this.matDialog.closeAll();
+          } else {
+            this.mensajeria = resp
+            Swal.fire("Ups!", "No se pudo registrar el producto, debido a: " + this.mensajeria.mensajeDescripcion, "error");
+          }
+        })
+      }
+      
     }
   }
   validarCampos() {
