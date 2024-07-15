@@ -1,0 +1,59 @@
+<div class="masterContainer">
+
+    <div class="container">
+        <div class="bodyRight">
+            <div class="title">
+                <h1>Sistem de Facturación</h1>
+                <label>100% Automatically and free</label>
+            </div>
+            <!-- <img class="imag"/> -->
+            <div class="image-container">
+                <img class="imag" src="/src/app/Content/Factura.png" alt="Factura">
+            </div>
+        </div>
+        <div class="Cards">
+            <mat-card class="matcard">
+                <mat-card-header>
+                    <div mat-card-avatar class="avatar"></div>
+                    <mat-card-title>Inicio de Sesion</mat-card-title>
+                    <mat-card-subtitle>Sistema Facturación</mat-card-subtitle>
+                </mat-card-header>
+                <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+                <mat-card-content class="cardContent">
+                    <form [formGroup]="loginForm" class="matcardContent">
+                        <mat-form-field class="inputsloggin">
+                            <mat-label>Usuario</mat-label>
+                            <input type="user" matInput formControlName="user" [errorStateMatcher]="matcher"
+                                placeholder="Ex. usuario" [(ngModel)]="usuario.nombre">
+                            <mat-hint>Nombre de usuario</mat-hint>
+                            <mat-error *ngIf="loginForm.get('user')?.hasError('required')">
+                                Ingrese el <strong>usuario</strong>
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="inputsloggin">
+                            <mat-label>Ingrese su contraseña</mat-label>
+                            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password"
+                                [errorStateMatcher]="matcher" [(ngModel)]="usuario.password">
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                                [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                            <mat-hint>Contraseña</mat-hint>
+                            <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+                                Ingrese su <strong>contraseña</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </form>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-raised-button class="btn" mat-button [disabled]="!loginForm.valid"
+                    (click)="validarFormulario()"
+                    value="Login"
+                    >Iniciar
+                        session</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>

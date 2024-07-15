@@ -1,0 +1,59 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UsuarioR, UsuarioResponse } from 'src/app/Interface/Users';
+import { AutentificationService } from 'src/app/Services/Autentificacion/autentification.service';
+import { MyErrorStateMatcher } from 'src/app/Shared/ErrorStament';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent {
+  // emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  // userControl = new FormControl('', [Validators.required]);
+  // passControl = new FormControl('', [Validators.required]);
+
+  // matcher = new MyErrorStateMatcher();
+  // hide = true;
+  usuario: UsuarioR = {
+    nombre: "",
+    password: ""
+  }
+
+  loginForm: FormGroup;
+  matcher = new MyErrorStateMatcher();
+  hide = true;
+
+  constructor(private fb: FormBuilder,
+    private router: Router,
+    private autSv: AutentificationService,
+  ) {
+    this.loginForm = this.fb.group({
+      user: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
+  public validarFormulario() {
+    this.autSv.loginSession(this.usuario).subscribe(
+      (response: UsuarioResponse) => {
+        var token = this.autSv.checkToken();
+        if (token) {
+          if (response && response.token) {
+              this.router.navigate(['/home']);
+          }
+        } else {
+          this.router.navigate(['/loggin']);
+        }
+        // Maneja la respuesta exitosa aquí (e.g., almacenar el token, redirigir al usuario, etc.)
+      },
+      (error) => {
+        console.error("Login failed:", error);
+        this.router.navigate(['/loggin']);
+        // Maneja el error aquí (e.g., mostrar un mensaje de error)
+      }
+    )
+  }
+
+}

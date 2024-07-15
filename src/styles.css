@@ -1,1 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-typography {
+    background-image: url('src/app/Content/imgfondo.png');
+    background-size: cover;
+    /* Ajusta la imagen para cubrir todo el contenedor */
+    background-repeat: no-repeat;
+    /* Evita que la imagen se repita */
+    background-position: center;
+    /* Centra la imagen */
+    width: 100%;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: aliceblue !important;
+    box-shadow: 0 0 4px 2px !important;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
+    border-bottom-color: rgba(24, 127, 158, 0.356) !important;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::after {
+    border-bottom-color: rgba(24, 127, 158, 0.356) !important;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label, 
+.mdc-text-field--filled:not(.mdc-text-field--disabled).mdc-text-field--focused 
+.mdc-floating-label--float-above{
+color: rgba(24, 127, 158, 0.356) !important;
+}
+.mat-mdc-form-field.mat-focused .mat-mdc-form-field-focus-overlay{
+    opacity: .01 !important;
+}
