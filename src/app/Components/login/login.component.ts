@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UsuarioR, UsuarioResponse } from 'src/app/Interface/Users';
+import { ResultUsersLogin, UsuarioR, UsuariosVMResponse } from 'src/app/Interface/Users';
 import { AutentificationService } from 'src/app/Services/Autentificacion/autentification.service';
 import { MyErrorStateMatcher } from 'src/app/Shared/ErrorStament';
 
@@ -37,10 +37,11 @@ export class LoginComponent {
   }
   public validarFormulario() {
     this.autSv.loginSession(this.usuario).subscribe(
-      (response: UsuarioResponse) => {
+      (response: ResultUsersLogin) => {
         var token = this.autSv.checkToken();
         if (token) {
-          if (response && response.token) {
+          
+          if (response && response.usuario.token) {
               this.router.navigate(['/home']);
           }
         } else {

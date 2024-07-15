@@ -20,6 +20,8 @@ import {MatInputModule} from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
+import { DocumentosComponent } from './Components/Documentos/documentos/documentos.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import { HttpClientModule } from '@angular/common/http';
     FacturasComponent,
     LoginComponent,
     NavigationfacturacionComponent,
+    DocumentosComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,7 +48,8 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     ReactiveFormsModule,
     MatCardModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTabsModule
     
   ],
   providers: [],
