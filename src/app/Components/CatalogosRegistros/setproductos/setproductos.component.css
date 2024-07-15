@@ -1,0 +1,41 @@
+.contenedorCentral{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.matcardContent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.piepage{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.colmuns{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 20px;
+}
+.izq{
+    width: 80%;
+}
+.btn{
+    width: 100%;
+}
+.register {
+    width: 50%;
+}
+.cancel {
+    width: 50%;
+}

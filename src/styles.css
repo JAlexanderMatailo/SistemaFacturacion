@@ -42,3 +42,7 @@ color: rgba(24, 127, 158, 0.356) !important;
 .mat-mdc-form-field.mat-focused .mat-mdc-form-field-focus-overlay{
     opacity: .01 !important;
 }
+.inputsloggin {
+    width: 100%;
+    color: #61afb9;;
+  }

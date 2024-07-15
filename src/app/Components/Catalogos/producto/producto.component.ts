@@ -56,8 +56,8 @@ export class ProductoComponent {
   }
   setProdutos(){
     const dialogRef = this.matDialog.open(SetproductosComponent, {
-      width: '550px',
-      height: 'auto',
+      width: '450px',
+      height: '450px',
       panelClass: 'fondo',
       data: null
     })

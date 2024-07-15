@@ -21,21 +21,25 @@ export class SetproductosComponent {
     FechaCreacion: new Date()
   }
 
-  mensajeria : MensajesVM = {
-    codigoResult : 0,
+  mensajeria: MensajesVM = {
+    codigoResult: 0,
     mensajeDescripcion: ""
   }
   productForm: FormGroup;
   matcher = new MyErrorStateMatcher();
   hide = true;
 
+  isDisabled: boolean = true;
+
   constructor(private matDialog: MatDialog,
     private productos: ProductosService,
     private fb: FormBuilder,
   ) {
-this.productForm = this.fb.group({
-  productosS: ['', Validators.required],
-      password: ['', Validators.required]
+    this.productForm = this.fb.group({
+      productosS: ['', Validators.required],
+      dsProducto: ['', Validators.required],
+      preProducto: ['', Validators.required],
+      fRegistro: ['', Validators.required],
     });
   }
 
@@ -46,19 +50,19 @@ this.productForm = this.fb.group({
 
     if (this.validarCampos()) {
       this.productos.SetProducto(this.producto).subscribe(resp => {
-        if(resp){
+        if (resp) {
           Swal.fire({
             title: "Excelente!",
-            text: `Se añadido el producto: ${this.producto?.Nombre + 'con el código: ' + this.producto?.Codigo}`,
+            text: `${resp.mensajeDescripcion}: ${this.producto?.Nombre +' ' + 'con el código:'+ ' ' + this.producto?.Codigo}`,
             icon: "success",
             confirmButtonColor: "rgb(10, 83, 58)",
             confirmButtonText: "Aceptar",
             showCloseButton: true
           });
           this.matDialog.closeAll();
-        }else {
+        } else {
           this.mensajeria = resp
-          Swal.fire("Ups!", "No se pudo registrar el producto, debido a: "+ this.mensajeria.mensajeDescripcion, "error");
+          Swal.fire("Ups!", "No se pudo registrar el producto, debido a: " + this.mensajeria.mensajeDescripcion, "error");
         }
       })
     }
@@ -79,5 +83,12 @@ this.productForm = this.fb.group({
     } else {
       return true;
     }
+  }
+  filtrarNumeros(event: any) {
+    const input = event.target;
+    input.value = input.value.replace(/[^0-9]/g, '');
+  }
+  onCedulaInputChange(event: Event) {
+    this.filtrarNumeros(event);
   }
 }

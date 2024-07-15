@@ -28,6 +28,7 @@ import { MatTableModule } from '@angular/material/table';
 import { SetproductosComponent } from './Components/CatalogosRegistros/setproductos/setproductos.component';
 import { SetclientesComponent } from './Components/CatalogosRegistros/setclientes/setclientes.component';
 import {MatDialogModule}from '@angular/material/dialog';
+import { OnlyNumbersWithDecimalDirective } from './Shared/DirectiveNumber/only-numbers-with-decimal.directive';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import {MatDialogModule}from '@angular/material/dialog';
     DocumentosComponent,
     SetproductosComponent,
     SetclientesComponent,
+    OnlyNumbersWithDecimalDirective,
   ],
   imports: [
     BrowserModule,

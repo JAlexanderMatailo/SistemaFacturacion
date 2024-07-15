@@ -1,43 +1,69 @@
 <div class="contenedorCentral">
-    <h1>{{tittle}}</h1>
     <div class="colmuns">
+        <h1>{{tittle}}</h1>
         <div class="izq">
-            <label>Código del registro:</label>
-            <input type="text" class="form-control" mat-input placeholder="Ej. 00001"
-                [(ngModel)]="producto.Codigo" />
-                <form [formGroup]="productForm" class="matcardContent">
+            
+            <form [formGroup]="productForm" class="matcardContent">
                 <mat-form-field class="inputsloggin">
                     <mat-label>Codigo del producto</mat-label>
-                    <input type="user" matInput formControlName="productosS" [errorStateMatcher]="matcher"
-                        placeholder="Ex. usuario" [(ngModel)]="producto.Codigo">
-                    <mat-hint>Nombre de usuario</mat-hint>
+                    <input type="text" matInput formControlName="productosS" [errorStateMatcher]="matcher"
+                        placeholder="Ej. 00001" [(ngModel)]="producto.Codigo" (input)="onCedulaInputChange($event)" maxlength="15">
+                    <mat-hint>Codigo unico del producto</mat-hint>
                     <mat-error *ngIf="productForm.get('productosS')?.hasError('required')">
-                        Ingrese el <strong>usuario</strong>
+                        Ingrese el <strong>producto</strong>
                     </mat-error>
                 </mat-form-field>
+
+                <mat-form-field class="inputsloggin">
+                    <mat-label>Descripcion del producto:</mat-label>
+                    <input type="text" matInput formControlName="dsProducto" [errorStateMatcher]="matcher"
+                        placeholder="Ej. producto" [(ngModel)]="producto.Nombre">
+                    <mat-hint>Descripción del producto</mat-hint>
+                    <mat-error *ngIf="productForm.get('dsProducto')?.hasError('required')">
+                        Ingrese el <strong>nombre</strong> del producto
+                    </mat-error>
+                </mat-form-field>
+                
+                <mat-form-field class="inputsloggin">
+                    <mat-label>Precio del producto</mat-label>
+                    <span matPrefix>$&nbsp;</span>
+                    <input type="text" matInput formControlName="preProducto" [errorStateMatcher]="matcher" appOnlyNumbersWithDecimal
+                        placeholder="Ej. 00.00" [(ngModel)]="producto.Precio">
+                    <mat-hint>Precio del producto</mat-hint>
+                    <mat-error *ngIf="productForm.get('preProducto')?.hasError('required')">
+                        Debe agregar el <strong>precio</strong> del producto
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="inputsloggin" disabled>
+                    <mat-label>Fecha de Registro:</mat-label>
+                    <input type="date" matInput formControlName="fRegistro" [disabled]="isDisabled" [errorStateMatcher]="matcher"
+                        placeholder="Fecha Actual" [(ngModel)]="producto.FechaCreacion ">
+                    <mat-hint>Fecha del dia</mat-hint>
+                    <mat-error *ngIf="productForm.get('fRegistro')?.hasError('required')">
+                        Ingrese una <strong>Fecha</strong>
+                    </mat-error>
+                </mat-form-field>
+
             </form>
-            <label>Descripcion del producto:</label>
-            <input type="text" class="form-control" mat-input placeholder="Ej. producto"
-                [(ngModel)]="producto.Nombre" />
-
-            <label>Precio:</label>
-            <input type="text" class="form-control" mat-input placeholder="Ej. 10.00"
-                [(ngModel)]="producto.Precio" />
-
-            <label>Fecha de Registro:</label>
-            <input type="text" class="form-control" mat-input placeholder="Fecha Actual"
-                [(ngModel)]="producto.FechaCreacion" />
+        </div>
+        <div class="izq">
+            <div class="piepage">
+                <div class="cancel">
+                    <button mat-raised-button class="btn" mat-button (click)="Cancelar()" value="Login">
+                        Cancelar</button>
+                    <!-- <button class="btn btn-danger w-100" (click)="Cancelar()">Cancelar</button> -->
+                </div>
+                <div class="register">
+                    <button mat-raised-button class="btn" mat-button (click)="SetProducto()" value="Login">
+                        Guardar</button>
+                    <!-- <button class="btn btn-primary w-100" (click)="SetProducto()">Guardar</button> -->
+                </div>
+            </div>
         </div>
         
     </div>
-    <div class="piepage">
-        <div class="cancel">
-            <button class="btn btn-danger w-100" (click)="Cancelar()">Cancelar</button>
-        </div>
-        <div class="register">
-            <button class="btn btn-primary w-100" (click)="SetProducto()">Guardar</button>
-        </div>
-    </div>
+
 
 
 </div>
