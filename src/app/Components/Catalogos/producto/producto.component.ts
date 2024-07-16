@@ -23,10 +23,10 @@ export class ProductoComponent {
 
   producto: ProductoVMRequest = {
     idProducto: 0,
-    Codigo: "",
-    Nombre: "",
-    Precio: 0.0,
-    FechaCreacion: new Date()
+    codigo: "",
+    nombre: "",
+    precio: 0.0,
+    fechaCreacion: new Date()
   }
 
   mensajeria: MensajesVM = {
@@ -84,15 +84,15 @@ export class ProductoComponent {
 
   setProduct(event:any){
     if(event){
-      this.producto.Codigo = event.codigo
-      this.producto.Nombre = event.nombre
-      this.producto.Precio = event.precio
-      this.producto.FechaCreacion = event.fechaCreacion
+      this.producto.codigo = event.codigo
+      this.producto.nombre = event.nombre
+      this.producto.precio = event.precio
+      this.producto.fechaCreacion = event.fechaCreacion
       this.productos.SetProducto(this.producto).subscribe(resp => {
         if (resp) {
           Swal.fire({
             title: "Excelente!",
-            text: `${resp.mensajeDescripcion}: ${this.producto?.Nombre +' ' + 'con el código:'+ ' ' + this.producto?.Codigo}`,
+            text: `${resp.mensajeDescripcion}: ${this.producto?.nombre +' ' + 'con el código:'+ ' ' + this.producto?.codigo}`,
             icon: "success",
             confirmButtonColor: "rgb(10, 83, 58)",
             confirmButtonText: "Aceptar",
@@ -114,8 +114,8 @@ export class ProductoComponent {
     console.log("Data: ",producto);
     
     const dialogRef = this.matDialog.open(SetproductosComponent, {
-      width: '550px',
-      height: 'auto',
+      width: '450px',
+      height: '450px',
       panelClass: 'fondo',
       data: producto
     });
@@ -129,7 +129,7 @@ export class ProductoComponent {
       if (resp) {
         Swal.fire({
           title: "Excelente!",
-          text: `${resp.mensajeDescripcion}: ${this.producto?.Nombre +' ' + 'con el código:'+ ' ' + this.producto?.Codigo}`,
+          text: `${resp.mensajeDescripcion}: ${this.producto?.nombre +' ' + 'con el código:'+ ' ' + this.producto?.codigo}`,
           icon: "success",
           confirmButtonColor: "rgb(10, 83, 58)",
           confirmButtonText: "Aceptar",

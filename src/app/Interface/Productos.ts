@@ -12,10 +12,10 @@ export interface ProductoVMResponse {
 
 export interface ProductoVMRequest {
     idProducto : number
-    Codigo: string;
-    Nombre: string;
-    Precio: number; 
-    FechaCreacion: Date;
+    codigo: string;
+    nombre: string;
+    precio: number; 
+    fechaCreacion: Date;
 }
 
 export interface ResultProductos extends MensajesVM {

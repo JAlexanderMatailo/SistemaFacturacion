@@ -29,6 +29,10 @@ import { SetproductosComponent } from './Components/CatalogosRegistros/setproduc
 import { SetclientesComponent } from './Components/CatalogosRegistros/setclientes/setclientes.component';
 import {MatDialogModule}from '@angular/material/dialog';
 import { OnlyNumbersWithDecimalDirective } from './Shared/DirectiveNumber/only-numbers-with-decimal.directive';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { RegistrarfacturaComponent } from './Components/RegistroFactura/registrarfactura/registrarfactura.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+
 
 @NgModule({
   declarations: [
@@ -43,6 +47,8 @@ import { OnlyNumbersWithDecimalDirective } from './Shared/DirectiveNumber/only-n
     SetproductosComponent,
     SetclientesComponent,
     OnlyNumbersWithDecimalDirective,
+    RegistrarfacturaComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -63,7 +69,9 @@ import { OnlyNumbersWithDecimalDirective } from './Shared/DirectiveNumber/only-n
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTooltipModule,
+    MatAutocompleteModule
     
   ],
   providers: [],

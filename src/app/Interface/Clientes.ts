@@ -2,19 +2,19 @@ import { MensajesVM } from "./Mensajeria"
 
 export interface ClientesVM {
     idCliente : number
-    RucDni: string
-    Nombre: string
-    Direccion: string
-    Correo: string
+    rucDni: string
+    nombre: string
+    direccion: string
+    correo: string
 }
 export interface ClienteResponse {
-    IdCliente: number
-    RucDni: string
-    Nombre: string
-    Direccion: string
-    Correo: string
-    Activo: string
-    FechaCreacion: Date
+    idCliente: number
+    rucDni: string
+    nombre: string
+    direccion: string
+    correo: string
+    activo: string
+    fechaCreacion: Date
 }
 
 export interface ResultClientes extends MensajesVM {

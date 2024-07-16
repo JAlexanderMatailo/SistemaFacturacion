@@ -26,10 +26,10 @@ export class SetclientesComponent {
 
   clienteReq: ClientesVM = {
     idCliente: 0,
-    RucDni: "",
-    Nombre: "",
-    Direccion: "",
-    Correo: "",
+    rucDni: "",
+    nombre: "",
+    direccion: "",
+    correo: "",
   }
 
   mensajeria: MensajesVM = {
@@ -63,7 +63,14 @@ export class SetclientesComponent {
   obtenerDatos() {
     console.log("Llegó data: ", this.data);
     if (this.data != null) {
-      this.clienteReq = { ...this.data }; // Copia los datos recibidos a producto
+      // this.clienteReq = { ...this.data }; 
+      this.clienteReq.idCliente = this.data.idCliente
+      this.clienteReq.rucDni = this.data.rucDni
+      this.clienteReq.nombre = this.data.nombre
+      this.clienteReq.direccion = this.data.direccion
+      this.clienteReq.correo = this.data.correo
+      console.log("Data", this.clienteReq);
+      
     }
   }
   SetProducto() {
@@ -74,7 +81,7 @@ export class SetclientesComponent {
           if (resp) {
             Swal.fire({
               title: "Excelente!",
-              text: `${resp.mensajeDescripcion}: ${this.clienteReq?.Nombre +' ' + 'con el código:'+ ' ' + this.clienteReq?.RucDni}`,
+              text: `${resp.mensajeDescripcion}: ${this.clienteReq?.nombre +' ' + 'con el código:'+ ' ' + this.clienteReq?.rucDni}`,
               icon: "success",
               confirmButtonColor: "rgb(10, 83, 58)",
               confirmButtonText: "Aceptar",
@@ -91,7 +98,7 @@ export class SetclientesComponent {
           if (resp) {
             Swal.fire({
               title: "Excelente!",
-              text: `${resp.mensajeDescripcion}: ${this.clienteReq?.Nombre +' ' + 'con el código:'+ ' ' + this.clienteReq?.RucDni}`,
+              text: `${resp.mensajeDescripcion}: ${this.clienteReq?.nombre +' ' + 'con el código:'+ ' ' + this.clienteReq?.rucDni}`,
               icon: "success",
               confirmButtonColor: "rgb(10, 83, 58)",
               confirmButtonText: "Aceptar",
@@ -108,16 +115,16 @@ export class SetclientesComponent {
     }
   }
   validarCampos() {
-    if (!this.clienteReq.RucDni || this.clienteReq.RucDni.trim() === '') {
+    if (!this.clienteReq.rucDni || this.clienteReq.rucDni.trim() === '') {
       Swal.fire("Ups!", "Agregue el código del producto", "error");
       return false;
-    } else if (!this.clienteReq.Nombre || this.clienteReq.Nombre.trim() === '') {
+    } else if (!this.clienteReq.nombre || this.clienteReq.nombre.trim() === '') {
       Swal.fire("Ups!", "Ingrese el detalle del producto", "error");
       return false;
-    } else if (!this.clienteReq.Direccion || this.clienteReq.Direccion.trim() === '') {
+    } else if (!this.clienteReq.direccion || this.clienteReq.direccion.trim() === '') {
       Swal.fire("Ups!", "Ingrese el precio del producto", "error");
       return false;
-    } else if (!this.clienteReq.Correo || this.clienteReq.Correo.trim() === '') {
+    } else if (!this.clienteReq.correo || this.clienteReq.correo.trim() === '') {
       Swal.fire("Ups!", "Verifique que la fecha sea la correcta", "error");
       return false;
     } else {

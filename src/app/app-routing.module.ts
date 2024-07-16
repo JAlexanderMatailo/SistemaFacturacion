@@ -4,6 +4,7 @@ import { LoginComponent } from './Components/login/login.component';
 import { NavigationfacturacionComponent } from './Components/navigationfacturacion/navigationfacturacion.component';
 import { CatalogosComponent } from './Components/Catalogos/catalogos/catalogos.component';
 import { DocumentosComponent } from './Components/Documentos/documentos/documentos.component';
+import { RegistrarfacturaComponent } from './Components/RegistroFactura/registrarfactura/registrarfactura.component';
 
 const routes: Routes = [
   { path: 'loggin', component: LoginComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
     children: [
       { path: 'catalogos', component: CatalogosComponent },
       { path: 'documentos', component: DocumentosComponent },
+      { path: 'factura', component: RegistrarfacturaComponent },
     ]
   },
 

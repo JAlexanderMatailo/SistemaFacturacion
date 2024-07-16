@@ -7,7 +7,7 @@
                 <mat-form-field class="inputsloggin">
                     <mat-label>Identificacion del cliente</mat-label>
                     <input type="text" matInput formControlName="productosS" [errorStateMatcher]="matcher"
-                        placeholder="Ej. 123456789..." [(ngModel)]="clienteReq.RucDni" (input)="onCedulaInputChange($event)" maxlength="15">
+                        placeholder="Ej. 123456789..." [(ngModel)]="clienteReq.rucDni" (input)="onCedulaInputChange($event)" maxlength="15">
                     <mat-hint>Codigo unico del cliete</mat-hint>
                     <mat-error *ngIf="productForm.get('productosS')?.hasError('required')">
                         Ingrese el <strong>número</strong> de Identificación
@@ -17,7 +17,7 @@
                 <mat-form-field class="inputsloggin">
                     <mat-label>Nombres y Aplellidos:</mat-label>
                     <input type="text" matInput formControlName="dsProducto" [errorStateMatcher]="matcher"
-                        placeholder="Ej. producto" [(ngModel)]="clienteReq.Nombre">
+                        placeholder="Ej. Maria Mar.." [(ngModel)]="clienteReq.nombre">
                     <mat-hint>Ingresa los nombres y Aplellidos del cliente</mat-hint>
                     <mat-error *ngIf="productForm.get('dsProducto')?.hasError('required')">
                         Ingrese los <strong>nombrea</strong> del cliente
@@ -27,8 +27,8 @@
                 <mat-form-field class="inputsloggin">
                     <mat-label>Direccion</mat-label>
                     <span matPrefix>$&nbsp;</span>
-                    <input type="text" matInput formControlName="preProducto" [errorStateMatcher]="matcher" appOnlyNumbersWithDecimal
-                        placeholder="Ej. 00.00" [(ngModel)]="clienteReq.Direccion">
+                    <input type="text" matInput formControlName="preProducto" [errorStateMatcher]="matcher"
+                        placeholder="Ej. Guayaquil" [(ngModel)]="clienteReq.direccion">
                     <mat-hint>Ingrese una dirección</mat-hint>
                     <mat-error *ngIf="productForm.get('preProducto')?.hasError('required')">
                         Debe agregar la <strong>Direcion</strong> del cliente
@@ -37,8 +37,8 @@
 
                 <mat-form-field class="inputsloggin">
                     <mat-label>Correo:</mat-label>
-                    <input type="date" matInput formControlName="fRegistro" [errorStateMatcher]="matcher"
-                        placeholder="Fecha Actual" [(ngModel)]="clienteReq.Correo ">
+                    <input type="email" matInput formControlName="fRegistro" [errorStateMatcher]="matcher"
+                        placeholder="ejemplo@ejemplo.com" [(ngModel)]="clienteReq.correo ">
                     <mat-hint>Fecha del dia</mat-hint>
                     <mat-error *ngIf="productForm.get('fRegistro')?.hasError('required')">
                         Ingrese un <strong>Correo</strong>

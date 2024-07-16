@@ -21,13 +21,13 @@ export class ClientesComponent {
   clienteL: any [] = []
 
   clienteR: ClienteResponse = {
-    IdCliente: 0,
-    RucDni: "",
-    Nombre: "",
-    Direccion: "",
-    Correo: "",
-    Activo: "",
-    FechaCreacion: new Date()
+    idCliente: 0,
+    rucDni: "",
+    nombre: "",
+    direccion: "",
+    correo: "",
+    activo: "",
+    fechaCreacion: new Date()
   }
 
   mensajeria: MensajesVM = {
@@ -88,8 +88,8 @@ export class ClientesComponent {
     console.log("Data: ",producto);
     
     const dialogRef = this.matDialog.open(SetclientesComponent, {
-      width: '550px',
-      height: 'auto',
+      width: '450px',
+      height: '450px',
       panelClass: 'fondo',
       data: producto
     });
@@ -98,12 +98,16 @@ export class ClientesComponent {
     });
   }
   DeleteCliente(event: any) {
-    //alert(person.idContribuyente)
+    //alert(person.idContribuyente)log
+    console.log(event);
+    
+    console.log(event.idCliente);
+    
     this.clientes.deleteCliente(event.idCliente).subscribe(resp => {
-      if (resp) {
+      if (resp =! null && resp.codigoResult ==200) {
         Swal.fire({
-          title: "Excelente!",
-          text: `${resp.mensajeDescripcion}: ${this.clienteR?.Nombre +' ' + 'con el código:'+ ' ' + this.clienteR?.RucDni}`,
+          title: "Correcto!",
+          text: `Se eliminó a: ${event.nombre +' ' + 'con el código:'+ ' ' + event.rucDni}`,
           icon: "success",
           confirmButtonColor: "rgb(10, 83, 58)",
           confirmButtonText: "Aceptar",

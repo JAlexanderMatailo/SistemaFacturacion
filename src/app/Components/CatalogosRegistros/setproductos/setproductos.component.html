@@ -7,7 +7,7 @@
                 <mat-form-field class="inputsloggin">
                     <mat-label>Codigo del producto</mat-label>
                     <input type="text" matInput formControlName="productosS" [errorStateMatcher]="matcher"
-                        placeholder="Ej. 00001" [(ngModel)]="producto.Codigo" (input)="onCedulaInputChange($event)" maxlength="15">
+                        placeholder="Ej. 00001" [(ngModel)]="producto.codigo" (input)="onCedulaInputChange($event)" maxlength="15">
                     <mat-hint>Codigo unico del producto</mat-hint>
                     <mat-error *ngIf="productForm.get('productosS')?.hasError('required')">
                         Ingrese el <strong>producto</strong>
@@ -17,7 +17,7 @@
                 <mat-form-field class="inputsloggin">
                     <mat-label>Descripcion del producto:</mat-label>
                     <input type="text" matInput formControlName="dsProducto" [errorStateMatcher]="matcher"
-                        placeholder="Ej. producto" [(ngModel)]="producto.Nombre">
+                        placeholder="Ej. producto" [(ngModel)]="producto.nombre">
                     <mat-hint>Descripción del producto</mat-hint>
                     <mat-error *ngIf="productForm.get('dsProducto')?.hasError('required')">
                         Ingrese el <strong>nombre</strong> del producto
@@ -28,7 +28,7 @@
                     <mat-label>Precio del producto</mat-label>
                     <span matPrefix>$&nbsp;</span>
                     <input type="text" matInput formControlName="preProducto" [errorStateMatcher]="matcher" appOnlyNumbersWithDecimal
-                        placeholder="Ej. 00.00" [(ngModel)]="producto.Precio">
+                        placeholder="Ej. 00.00" [(ngModel)]="producto.precio">
                     <mat-hint>Precio del producto</mat-hint>
                     <mat-error *ngIf="productForm.get('preProducto')?.hasError('required')">
                         Debe agregar el <strong>precio</strong> del producto
@@ -38,7 +38,7 @@
                 <mat-form-field class="inputsloggin" disabled>
                     <mat-label>Fecha de Registro:</mat-label>
                     <input type="date" matInput formControlName="fRegistro" [disabled]="isDisabled" [errorStateMatcher]="matcher"
-                        placeholder="Fecha Actual" [(ngModel)]="producto.FechaCreacion ">
+                        placeholder="Fecha Actual" [(ngModel)]="producto.fechaCreacion ">
                     <mat-hint>Fecha del dia</mat-hint>
                     <mat-error *ngIf="productForm.get('fRegistro')?.hasError('required')">
                         Ingrese una <strong>Fecha</strong>

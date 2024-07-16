@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="contenedorCentral">
+        <div class="header">
+            <div class="items">
+                <button matTooltip="Regresar a Documentos" matTooltipPosition="right" mat-raised-button mat-button
+                    style="display: flex; align-items: center; justify-content: center;" (click)="goBack()">
+                    <mat-icon style="margin-right: 8px;">arrow_back</mat-icon>Regresar
+                </button>
+                <h1>Factura</h1>
+                <Label>{{numeroFactura}}</Label>
+            </div>
+            <div class="datosCliente">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Buscar Cliente</mat-label>
+                  <input type="text" placeholder="Digite identificacion" aria-label="Number" matInput [formControl]="myControl"
+                         [matAutocomplete]="auto">
+                  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onSelectionChange($event)">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option.rucDni">
+                      {{option.rucDni}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+              
+              <div *ngIf="selectedClient">
+                <div>
+                  <p>Nombre del Cliente Seleccionado: {{ selectedClient.nombre }}</p>
+                </div>
+                <div>
+                  <p>RucDni del Cliente Seleccionado: {{ selectedClient.rucDni }}</p>
+                </div>
+                <div>
+                  <p>Dirección del Cliente Seleccionado: {{ selectedClient.direccion }}</p>
+                </div>
+                <div>
+                  <p>Correo del Cliente Seleccionado: {{ selectedClient.correo }}</p>
+                </div>
+              </div>
+
+        </div>
+        <div class="Body">
+
+        </div>
+        <div class="foot">
+
+        </div>
+    </div>
+</div>

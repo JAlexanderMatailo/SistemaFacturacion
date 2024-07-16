@@ -26,10 +26,10 @@ export class SetproductosComponent {
 
   producto: ProductoVMRequest = {
     idProducto: 0,
-    Codigo: "",
-    Nombre: "",
-    Precio: 0.0,
-    FechaCreacion: new Date()
+    codigo: "",
+    nombre: "",
+    precio: 0.0,
+    fechaCreacion: new Date()
   }
 
   mensajeria: MensajesVM = {
@@ -74,7 +74,7 @@ export class SetproductosComponent {
           if (resp) {
             Swal.fire({
               title: "Excelente!",
-              text: `${resp.mensajeDescripcion}: ${this.producto?.Nombre +' ' + 'con el código:'+ ' ' + this.producto?.Codigo}`,
+              text: `${resp.mensajeDescripcion}: ${this.producto?.nombre +' ' + 'con el código:'+ ' ' + this.producto?.codigo}`,
               icon: "success",
               confirmButtonColor: "rgb(10, 83, 58)",
               confirmButtonText: "Aceptar",
@@ -91,7 +91,7 @@ export class SetproductosComponent {
           if (resp) {
             Swal.fire({
               title: "Excelente!",
-              text: `${resp.mensajeDescripcion}: ${this.producto?.Nombre +' ' + 'con el código:'+ ' ' + this.producto?.Codigo}`,
+              text: `${resp.mensajeDescripcion}: ${this.producto?.nombre +' ' + 'con el código:'+ ' ' + this.producto?.codigo}`,
               icon: "success",
               confirmButtonColor: "rgb(10, 83, 58)",
               confirmButtonText: "Aceptar",
@@ -108,16 +108,16 @@ export class SetproductosComponent {
     }
   }
   validarCampos() {
-    if (!this.producto.Codigo || this.producto.Codigo.trim() === '') {
+    if (!this.producto.codigo || this.producto.codigo.trim() === '') {
       Swal.fire("Ups!", "Agregue el código del producto", "error");
       return false;
-    } else if (!this.producto.Nombre || this.producto.Nombre.trim() === '') {
+    } else if (!this.producto.nombre || this.producto.nombre.trim() === '') {
       Swal.fire("Ups!", "Ingrese el detalle del producto", "error");
       return false;
-    } else if (!this.producto.Precio || this.producto.Precio === 0) {
+    } else if (!this.producto.precio || this.producto.precio === 0) {
       Swal.fire("Ups!", "Ingrese el precio del producto", "error");
       return false;
-    } else if (!this.producto.FechaCreacion) {
+    } else if (!this.producto.fechaCreacion) {
       Swal.fire("Ups!", "Verifique que la fecha sea la correcta", "error");
       return false;
     } else {

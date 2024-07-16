@@ -24,12 +24,12 @@ export class ClienteService {
     return this.http.post<any>(this.urlBase+this.clientesS+'UpdateCliente',data);
   }
   deleteCliente(id:number):Observable<any>{
-    const product ={
+    const cliente ={
       id
     }
     let params = new HttpParams()
-    .append("IdProducto", product.id)
+    .append("idCliente", cliente.id)
     let headers = new HttpHeaders().set('Type-content','aplication/json')
-    return this.http.post<any>(this.urlBase+this.clientesS+'DeleteCliente',product, { headers, params});
+    return this.http.post<any>(this.urlBase+this.clientesS+'DeleteCliente',cliente, { headers, params});
   }
 }
