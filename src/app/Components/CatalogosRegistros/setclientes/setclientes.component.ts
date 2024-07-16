@@ -76,6 +76,8 @@ export class SetclientesComponent {
   SetProducto() {
 
     if (this.validarCampos()) {
+      console.log(this.clienteReq);
+      
       if(this.clienteReq.idCliente === 0){
         this.clientes.setClientes(this.clienteReq).subscribe(resp => {
           if (resp) {
@@ -90,12 +92,12 @@ export class SetclientesComponent {
             this.matDialog.closeAll();
           } else {
             this.mensajeria = resp
-            Swal.fire("Ups!", "No se pudo registrar el producto, debido a: " + this.mensajeria.mensajeDescripcion, "error");
+            Swal.fire("Ups!", "No se pudo registrar el cliente, debido a: " + this.mensajeria.mensajeDescripcion, "error");
           }
         })
       }else{
         this.clientes.UpdateCliente(this.clienteReq).subscribe(resp => {
-          if (resp) {
+          if (resp == 200) {
             Swal.fire({
               title: "Excelente!",
               text: `${resp.mensajeDescripcion}: ${this.clienteReq?.nombre +' ' + 'con el código:'+ ' ' + this.clienteReq?.rucDni}`,
@@ -107,7 +109,7 @@ export class SetclientesComponent {
             this.matDialog.closeAll();
           } else {
             this.mensajeria = resp
-            Swal.fire("Ups!", "No se pudo registrar el producto, debido a: " + this.mensajeria.mensajeDescripcion, "error");
+            Swal.fire("Ups!", this.mensajeria.mensajeDescripcion, "error");
           }
         })
       }

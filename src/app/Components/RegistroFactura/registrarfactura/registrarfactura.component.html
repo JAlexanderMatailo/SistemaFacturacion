@@ -9,33 +9,62 @@
                 <h1>Factura</h1>
                 <Label>{{numeroFactura}}</Label>
             </div>
+            <!-- <div class="datosCliente">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Buscar Cliente</mat-label>
+                    <input type="text" placeholder="Digite identificacion" aria-label="Number" matInput
+                        [formControl]="myControl" maxlength="15" [matAutocomplete]="auto">
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                        (optionSelected)="onSelectionChange($event)">
+                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.rucDni">
+                            {{option.rucDni}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+
+            <div *ngIf="selectedClient">
+                <div>
+                    <p>Nombre del Cliente Seleccionado: {{ selectedClient.nombre }}</p>
+                </div>
+                <div>
+                    <p>RucDni del Cliente Seleccionado: {{ selectedClient.rucDni }}</p>
+                </div>
+                <div>
+                    <p>Dirección del Cliente Seleccionado: {{ selectedClient.direccion }}</p>
+                </div>
+                <div>
+                    <p>Correo del Cliente Seleccionado: {{ selectedClient.correo }}</p>
+                </div>
+            </div> -->
             <div class="datosCliente">
                 <mat-form-field class="example-full-width">
-                  <mat-label>Buscar Cliente</mat-label>
-                  <input type="text" placeholder="Digite identificacion" aria-label="Number" matInput [formControl]="myControl"
-                         [matAutocomplete]="auto">
-                  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onSelectionChange($event)">
-                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option.rucDni">
-                      {{option.rucDni}}
-                    </mat-option>
-                  </mat-autocomplete>
+                    <mat-label>Buscar Cliente</mat-label>
+                    <input type="text" placeholder="Digite identificacion" aria-label="Number" matInput
+                        [formControl]="myControl" maxlength="15" [matAutocomplete]="auto" (input)="onInputChange($event)">
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                        (optionSelected)="onSelectionChange($event)">
+                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.rucDni">
+                            {{option.rucDni}}
+                        </mat-option>
+                    </mat-autocomplete>
                 </mat-form-field>
-              </div>
-              
-              <div *ngIf="selectedClient">
+            </div>
+            
+            <div *ngIf="selectedClient">
                 <div>
-                  <p>Nombre del Cliente Seleccionado: {{ selectedClient.nombre }}</p>
+                    <p>Nombre del Cliente Seleccionado: {{ selectedClient.nombre }}</p>
                 </div>
                 <div>
-                  <p>RucDni del Cliente Seleccionado: {{ selectedClient.rucDni }}</p>
+                    <p>RucDni del Cliente Seleccionado: {{ selectedClient.rucDni }}</p>
                 </div>
                 <div>
-                  <p>Dirección del Cliente Seleccionado: {{ selectedClient.direccion }}</p>
+                    <p>Dirección del Cliente Seleccionado: {{ selectedClient.direccion }}</p>
                 </div>
                 <div>
-                  <p>Correo del Cliente Seleccionado: {{ selectedClient.correo }}</p>
+                    <p>Correo del Cliente Seleccionado: {{ selectedClient.correo }}</p>
                 </div>
-              </div>
+            </div>
 
         </div>
         <div class="Body">

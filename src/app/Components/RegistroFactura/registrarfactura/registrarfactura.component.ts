@@ -1,15 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { map, Observable, startWith } from 'rxjs';
-import { ClienteResponse } from 'src/app/Interface/Clientes';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { ClienteService } from 'src/app/Services/Clientes/cliente.service';
+import { ClienteResponse, ClientesVM } from 'src/app/Interface/Clientes';  // Asegúrate de que la importación es correcta
+import { MatDialog } from '@angular/material/dialog';
+import { SetclientesComponent } from '../../CatalogosRegistros/setclientes/setclientes.component'; // Asegúrate de que la importación es correcta
 
 @Component({
   selector: 'app-registrarfactura',
   templateUrl: './registrarfactura.component.html',
   styleUrls: ['./registrarfactura.component.css']
 })
+
 export class RegistrarfacturaComponent implements OnInit {
   numeroFactura = "00000000";
   myControl = new FormControl('');
@@ -18,9 +22,18 @@ export class RegistrarfacturaComponent implements OnInit {
 
   selectedClient?: ClienteResponse;
 
+  clienteReq: ClientesVM = {
+    idCliente: 0,
+    rucDni: "",
+    nombre: "",
+    direccion: "",
+    correo: "",
+  }
+
   constructor(
     private router: Router,
-    private clientes: ClienteService
+    private clientes: ClienteService,
+    private matDialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -35,7 +48,6 @@ export class RegistrarfacturaComponent implements OnInit {
     this.clientes.getAllClientes().subscribe(resp => {
       this.clienteL = resp.listClientes;
       console.log(this.clienteL);
-      // Inicializa las opciones de filtrado
       this.filteredOptions = this.myControl.valueChanges.pipe(
         startWith(''),
         map(value => this._filter(value || '')),
@@ -51,7 +63,31 @@ export class RegistrarfacturaComponent implements OnInit {
   onSelectionChange(event: any) {
     const selectedRucDni = event.option.value;
     this.selectedClient = this.clienteL.find(cliente => cliente.rucDni === selectedRucDni);
-    console.log(this.selectedClient);
+  }
+
+  onInputChange(event: any) {
+    const inputValue = event.target.value;
+    // Si no hay cliente seleccionado y el valor de entrada es válido, llama a setClientes
+    if (!this.selectedClient && inputValue && inputValue.length >= 10) {
+      // this.setClientes();
+      setTimeout(() => {
+        if (!this.selectedClient) {
+          this.setClientes(this.clienteReq);
+        }
+      }, 3000);
+    }
+  }
+
+  setClientes(clienteReq: ClientesVM) {
+    const dialogRef = this.matDialog.open(SetclientesComponent, {
+      width: '450px',
+      height: '450px',
+      panelClass: 'fondo',
+      data: clienteReq
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.ObtenerClientes();
+    });
   }
 
   goBack() {
