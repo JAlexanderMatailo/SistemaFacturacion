@@ -1,0 +1,50 @@
+.container{
+    width: 100%;
+}
+.contenedorCentral{
+    padding: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+}
+.header{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+h1{
+    font-size: 30px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+.Secuencial{
+    color: rgba(189, 45, 9, 0.863);
+}
+.items{
+    display: flex;
+    gap: 20%;
+    align-items: center;
+    justify-content: space-between;
+}
+.dataClient{
+    display: flex;
+}
+.inputsloggin{
+    width: unset !important;
+}
+th{
+    text-align: justify;
+}
+
+.Body{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.btns{
+    display: flex;
+    gap: 10px;
+}
+/*Tabla*/

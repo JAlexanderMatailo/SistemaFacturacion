@@ -6,8 +6,8 @@
                     style="display: flex; align-items: center; justify-content: center;" (click)="goBack()">
                     <mat-icon style="margin-right: 8px;">arrow_back</mat-icon>Regresar
                 </button>
-                <h1>Factura</h1>
-                <Label>{{numeroFactura}}</Label>
+                <h1 class="tittle">Factura</h1>
+                <h1 class="Secuencial">{{numeroFactura}}</h1>
             </div>
             <!-- <div class="datosCliente">
                 <mat-form-field class="example-full-width">
@@ -41,7 +41,8 @@
                 <mat-form-field class="example-full-width">
                     <mat-label>Buscar Cliente</mat-label>
                     <input type="text" placeholder="Digite identificacion" aria-label="Number" matInput
-                        [formControl]="myControl" maxlength="15" [matAutocomplete]="auto" (input)="onInputChange($event)">
+                        [formControl]="myControl" maxlength="15" [matAutocomplete]="auto"
+                        (input)="onInputChange($event)">
                     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
                         (optionSelected)="onSelectionChange($event)">
                         <mat-option *ngFor="let option of filteredOptions | async" [value]="option.rucDni">
@@ -50,8 +51,89 @@
                     </mat-autocomplete>
                 </mat-form-field>
             </div>
-            
-            <div *ngIf="selectedClient">
+            <div class="dataClient">
+                <!-- <form [formGroup]="productForm" class="matcardContent" *ngIf="selectedClient">
+                    <Label>Identificacion CI/RUC: </Label>
+                    <mat-form-field class="inputsloggin">
+                        <mat-label>Identificacion del cliente</mat-label>
+                        <input type="text" matInput formControlName="productosS" [errorStateMatcher]="matcher"
+                            placeholder="Ej. 123456789..." [(ngModel)]="selectedClient.rucDni">
+                        <mat-hint>Codigo unico del cliete</mat-hint>
+                        <mat-error *ngIf="productForm.get('productosS')?.hasError('required')">
+                            Ingrese el <strong>número</strong> de Identificación
+                        </mat-error>
+                    </mat-form-field>
+                    <Label>Nombre y Aplellidos</Label>
+                    <mat-form-field class="inputsloggin">
+                        <mat-label>Nombres y Aplellidos:</mat-label>
+                        <input type="text" matInput formControlName="dsProducto" [errorStateMatcher]="matcher"
+                            placeholder="Ej. Maria Mar.." [(ngModel)]="selectedClient.nombre">
+                        <mat-hint>Ingresa los nombres y Aplellidos del cliente</mat-hint>
+                        <mat-error *ngIf="productForm.get('dsProducto')?.hasError('required')">
+                            Ingrese los <strong>nombrea</strong> del cliente
+                        </mat-error>
+                    </mat-form-field>
+                    
+                    <mat-form-field class="inputsloggin">
+                        <mat-label>Direccion</mat-label>
+                        <span matPrefix>$&nbsp;</span>
+                        <input type="text" matInput formControlName="preProducto" [errorStateMatcher]="matcher"
+                            placeholder="Ej. Guayaquil" [(ngModel)]="selectedClient.direccion">
+                        <mat-hint>Ingrese una dirección</mat-hint>
+                        <mat-error *ngIf="productForm.get('preProducto')?.hasError('required')">
+                            Debe agregar la <strong>Direcion</strong> del cliente
+                        </mat-error>
+                    </mat-form-field>
+    
+                    <mat-form-field class="inputsloggin">
+                        <mat-label>Correo:</mat-label>
+                        <input type="email" matInput formControlName="fRegistro" [errorStateMatcher]="matcher"
+                            placeholder="ejemplo@ejemplo.com" [(ngModel)]="selectedClient.correo ">
+                        <mat-hint>Fecha del dia</mat-hint>
+                        <mat-error *ngIf="productForm.get('fRegistro')?.hasError('required')">
+                            Ingrese un <strong>Correo</strong>
+                        </mat-error>
+                    </mat-form-field>
+    
+                </form> -->
+                <table>
+                    <td>
+                        <tr>
+                            <th>Ruc del cliente *: </th>
+                        </tr>
+                        <tr>
+                            <th>Razón Social del cliente *:</th>
+                        </tr>
+                        <tr>
+                            <th>Direccion:</th>
+                        </tr>
+                        <tr>
+                            <th>Correo</th>
+                        </tr>
+                    </td>
+                    <td></td>
+                    <td>
+                        <div *ngIf="selectedClient">
+                            <tr>
+                                <th>{{ selectedClient.rucDni }}</th>
+                            </tr>
+                            <tr>
+                                <th>{{ selectedClient.nombre }}</th>
+                            </tr>
+                            <tr>
+                                <th>{{ selectedClient.direccion }}</th>
+                            </tr>
+                            <tr>
+                                <th>{{ selectedClient.correo }}</th>
+                            </tr>
+                        </div>
+
+                    </td>
+
+
+                </table>
+            </div>
+            <!-- <div *ngIf="selectedClient">
                 <div>
                     <p>Nombre del Cliente Seleccionado: {{ selectedClient.nombre }}</p>
                 </div>
@@ -64,12 +146,70 @@
                 <div>
                     <p>Correo del Cliente Seleccionado: {{ selectedClient.correo }}</p>
                 </div>
-            </div>
-
+            </div> -->
+            <mat-divider></mat-divider>
         </div>
+
         <div class="Body">
+            <div class="btns">
+                <button mat-raised-button (click)="addData()" class="demo-button">
+                    Add data
+                </button>
+                <button mat-raised-button (click)="removeData()" class="demo-button">
+                    Remove data
+                </button>
+            </div>
+            
+            <table mat-table [dataSource]="dataSource">
 
+                <!-- Cantidad Column -->
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                    <td mat-footer-cell *matFooterCellDef colspan="4"></td>
+                </ng-container>
+
+                <!-- Detalle/Descripcion Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Detalle/Descripcion </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    <td mat-footer-cell *matFooterCellDef colspan="4"></td>
+                </ng-container>
+
+                <!-- Precio Unitario Column -->
+                <ng-container matColumnDef="weight">
+                    <th mat-header-cell *matHeaderCellDef> Precio Unitario </th>
+                    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                    <td mat-footer-cell *matFooterCellDef> Subtotal </td>
+                    <td mat-footer-cell *matFooterCellDef> Porcentaje de IGV </td>
+                    <td mat-footer-cell *matFooterCellDef> IGV* </td>
+                    <td mat-footer-cell *matFooterCellDef> Total* </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="symbol">
+                    <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                    <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                    <td mat-footer-cell *matFooterCellDef>45.10</td>
+                    <td mat-footer-cell *matFooterCellDef>25.56</td>
+                    <td mat-footer-cell *matFooterCellDef>45.90</td>
+                    <td mat-footer-cell *matFooterCellDef>125.20</td>
+                </ng-container>
+
+                <!-- Header Row -->
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+
+                <!-- Data Rows -->
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <!-- Footer Row -->
+                <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
+
+            </table>
+
+            <mat-divider></mat-divider>
         </div>
+
         <div class="foot">
 
         </div>

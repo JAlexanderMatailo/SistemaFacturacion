@@ -20,6 +20,7 @@ export class ClienteService {
     .set('Type-content','aplication/json')
     return this.http.get<any>(this.urlBase+this.clientesS+'GetClientes');
   }
+
   UpdateCliente(data: any){
     return this.http.post<any>(this.urlBase+this.clientesS+'UpdateCliente',data);
   }
