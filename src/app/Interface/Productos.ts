@@ -1,13 +1,13 @@
 import { MensajesVM } from "./Mensajeria";
 
 export interface ProductoVMResponse {
-    IdProducto: number;
-    Codigo: string;
-    Nombre: string;
-    Precio: number;
-    Stock: number;
-    Activo?: boolean;
-    FechaCreacion?: Date;
+    idProducto: number;
+    codigo: string;
+    nombre: string;
+    precio: number;
+    stock: number;
+    activo?: boolean;
+    fechaCreacion?: Date;
 }
 
 export interface ProductoVMRequest {

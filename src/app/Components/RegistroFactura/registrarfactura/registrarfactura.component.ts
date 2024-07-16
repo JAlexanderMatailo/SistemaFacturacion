@@ -158,14 +158,30 @@ export class RegistrarfacturaComponent implements OnInit {
   }
 
   addData() {
-    // const randomElementIndex = Math.floor(Math.random() * ELEMENT_DATA.length);
-    this.dataSource.data;
-    // this.table.renderRows();
+    if (this.prodcutosL.length > 0) {
+      // Añadir el primer producto de la lista (puedes ajustar esto según sea necesario)
+      const producto = this.prodcutosL[0];
+
+      // Crear un nuevo objeto de producto para la tabla
+      const nuevoProducto = {
+        cantidad: 1, // Puedes ajustar la cantidad según sea necesario
+        nombre: producto.nombre,
+        precio: producto.precio,
+        codigo: producto.codigo
+      };
+
+      // Añadir el producto a la dataSource
+      this.dataSource.data = [...this.dataSource.data, nuevoProducto];
+    }
   }
 
   removeData() {
-    // this.dataSource.pop();
-    // this.table.renderRows();
+    // Remover el último producto añadido (puedes ajustar esto según sea necesario)
+    const data = this.dataSource.data;
+    if (data.length > 0) {
+      data.pop();
+      this.dataSource.data = data;
+    }
   }
 
   goBack() {
