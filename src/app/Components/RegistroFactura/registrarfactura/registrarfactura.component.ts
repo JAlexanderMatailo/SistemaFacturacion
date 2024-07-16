@@ -160,11 +160,11 @@ export class RegistrarfacturaComponent implements OnInit {
     });
   }
 
-  onSelectionChanges(event: any, element: any) {
-    const selectedProduct = event.value;
-    element.selectedProducto = selectedProduct;
-    element.disabled = true;
-  }
+  // onSelectionChanges(event: any, element: any) {
+  //   const selectedProduct = event.value;
+  //   element.selectedProducto = selectedProduct;
+  //   element.disabled = true;
+  // }
 
   addData() {
     if (this.prodcutosL.length > 0) {
@@ -197,7 +197,7 @@ export class RegistrarfacturaComponent implements OnInit {
   // calculateSubtotal(element: ElementoTabla): number {
   //   return element.cantidad * element.selectedProducto.precio;
   // }
-  onSelectionChangess(event: any, element: Element) {
+  onSelectionChanges(event: any, element: Element) {
     element.selectedProducto = event.value;
   }
   getSubtotal() {
