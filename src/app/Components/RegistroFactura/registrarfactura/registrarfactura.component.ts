@@ -24,7 +24,7 @@ export class RegistrarfacturaComponent implements OnInit {
   numeroFactura = "";
   myControl = new FormControl('');
   clienteL: ClienteResponse[] = [];
-  prodcutosL: ProductoVMResponse[] = []
+  prodcutosL: ProductoVMResponse[] = [];
 
   filteredOptions?: Observable<ClienteResponse[]>;
 
@@ -40,8 +40,8 @@ export class RegistrarfacturaComponent implements OnInit {
     nombre: "",
     direccion: "",
     correo: "",
-  }
-  facturaR : FacturaVMRequest = {
+  };
+  facturaR: FacturaVMRequest = {
     IdFactura: 0,
     NumeroFactura: "",
 
@@ -56,19 +56,19 @@ export class RegistrarfacturaComponent implements OnInit {
     Precio: 0,
     Cantidad: 0,
     SubtotalF: 0
-  }
+  };
 
   displayedColumns = ['position', 'name', 'weight', 'symbol'];
-  dataSource : MatTableDataSource<any>;
+  dataSource: MatTableDataSource<any>;
 
   constructor(
     private router: Router,
     private clientes: ClienteService,
     private matDialog: MatDialog,
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private products: ProductosService,
-    private facturas : FacturasService
-  ) { 
+    private facturas: FacturasService
+  ) {
     this.dataSource = new MatTableDataSource();
     this.productForm = this.fb.group({
       productosS: ['', Validators.required],
@@ -80,8 +80,8 @@ export class RegistrarfacturaComponent implements OnInit {
 
   ngOnInit() {
     this.ObtenerClientes();
-    this.ObtenerProductos()
-    this.ObtenerNumeroFactura()
+    this.ObtenerProductos();
+    this.ObtenerNumeroFactura();
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || '')),
@@ -91,7 +91,7 @@ export class RegistrarfacturaComponent implements OnInit {
   ObtenerClientes() {
     this.clientes.getAllClientes().subscribe(resp => {
       this.clienteL = resp.listClientes;
-      
+
       this.filteredOptions = this.myControl.valueChanges.pipe(
         startWith(''),
         map(value => this._filter(value || '')),
@@ -99,17 +99,15 @@ export class RegistrarfacturaComponent implements OnInit {
     });
   }
 
-  ObtenerProductos(){
-    this.products.getAllProductos().subscribe(resp =>{
-      this.prodcutosL = resp.listProductos
-      console.log(this.prodcutosL);
-      
-    })
+  ObtenerProductos() {
+    this.products.getAllProductos().subscribe(resp => {
+      this.prodcutosL = resp.listProductos;
+    });
   }
-  ObtenerNumeroFactura(){
+
+  ObtenerNumeroFactura() {
     this.facturas.ObtenerNumeroFactura().subscribe(resp => {
       this.facturaR.NumeroFactura = this.numeroFactura = resp;
-      
     });
   }
 
@@ -121,30 +119,30 @@ export class RegistrarfacturaComponent implements OnInit {
   onSelectionChange(event: any) {
     const selectedRucDni = event.option.value;
     this.selectedClient = this.clienteL.find(cliente => cliente.rucDni === selectedRucDni);
-      if(this.selectedClient){
-        this.facturaR.IdCliente = this.selectedClient.idCliente
-        console.log("Factura",this.facturaR);
-        
-      }
+    if (this.selectedClient) {
+      this.facturaR.IdCliente = this.selectedClient.idCliente;
+    }
   }
 
-  setClientesCalled: boolean = false
+  setClientesCalled: boolean = false;
+
   onInputChange(event: any) {
     const inputValue = event.target.value;
     if (!this.selectedClient && inputValue && inputValue.length >= 10) {
       if (!this.setClientesCalled) {
-        this.setClientesCalled = true; 
+        this.setClientesCalled = true;
         setTimeout(() => {
           if (!this.selectedClient) {
-            this.clienteReq.rucDni = inputValue
+            this.clienteReq.rucDni = inputValue;
             this.setClientes(this.clienteReq);
           }
         }, 3000);
       }
     } else {
-      this.setClientesCalled = false; 
+      this.setClientesCalled = false;
     }
   }
+
   setClientes(clienteReq: ClientesVM) {
     const dialogRef = this.matDialog.open(SetclientesComponent, {
       width: '450px',
@@ -165,6 +163,7 @@ export class RegistrarfacturaComponent implements OnInit {
       // Crear un nuevo objeto de producto para la tabla
       const nuevoProducto = {
         cantidad: 1, // Puedes ajustar la cantidad según sea necesario
+        selectedProducto: producto,
         nombre: producto.nombre,
         precio: producto.precio,
         codigo: producto.codigo

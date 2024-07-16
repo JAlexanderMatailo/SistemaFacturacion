@@ -32,6 +32,8 @@ import { OnlyNumbersWithDecimalDirective } from './Shared/DirectiveNumber/only-n
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RegistrarfacturaComponent } from './Components/RegistroFactura/registrarfactura/registrarfactura.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
+import { NgFor } from '@angular/common';
 
 
 @NgModule({
@@ -71,7 +73,9 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatTableModule,
     MatDialogModule,
     MatTooltipModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatSelectModule,
+    NgFor
     
   ],
   providers: [],
