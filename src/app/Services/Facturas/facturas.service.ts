@@ -10,8 +10,8 @@ export class FacturasService {
   urlBase = environment.urlBase
   facturasS = 'Factura/'
   constructor( private http : HttpClient ) { }
-  setClientes(data:any){
-    return this.http.post<any>(this.urlBase+this.facturasS+'SetCliente', data);
+  CrearFacturaAsync(data:any){
+    return this.http.post<any>(this.urlBase+this.facturasS+'CrearFacturaAsync', data);
   }
 
   getAllFacturas(){
@@ -24,10 +24,8 @@ export class FacturasService {
     .set('Type-content','aplication/json')
     return this.http.get<any>(this.urlBase+this.facturasS+'GenerarNumeroFactura');
   }
-  UpdateCliente(data: any){
-    return this.http.post<any>(this.urlBase+this.facturasS+'UpdateCliente',data);
-  }
+
   deleteFactura(data: any){
-    return this.http.post<any>(this.urlBase+this.facturasS+'DeleteCliente',data);
+    return this.http.post<any>(this.urlBase+this.facturasS+'DeleteFactura',data);
   }
 }

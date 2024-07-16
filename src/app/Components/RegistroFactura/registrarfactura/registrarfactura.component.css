@@ -47,4 +47,38 @@ th{
     display: flex;
     gap: 10px;
 }
+
+.foot{
+    display: flex;
+    gap:15px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: end;
+}
+
+.right{
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    flex-direction: column;
+}
+
+.left {
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    flex-direction: column;
+}
+
 /*Tabla*/
+.contenFooter{
+    width: 50%;
+}
+.btnFotters{
+    width: 541px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 141px;
+}

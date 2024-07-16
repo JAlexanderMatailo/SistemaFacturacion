@@ -49,15 +49,7 @@ export class RegistrarfacturaComponent implements OnInit {
     Subtotal: 0,
     Igv: 0,
     Total: 0,
-    Productos: [
-      {
-        CodigoProducto: "",
-        NombreProducto: "",
-        Precio: 0,
-        Cantidad: 0,
-        SubtotalF: 0
-      }
-    ]
+    Productos: []
   };
 
   displayedColumns = ['position', 'name', 'weight', 'symbol'];
@@ -102,9 +94,6 @@ export class RegistrarfacturaComponent implements OnInit {
   }
 
   ObtenerProductos() {
-    // this.products.getAllProductos().subscribe(resp => {
-    //   this.prodcutosL = resp.listProductos;
-    // });
     this.products.getAllProductos().subscribe(resp => {
       this.prodcutosL = resp.listProductos.map((p: ProductoVMResponse) => ({ ...p, disabled: false }));
     });
@@ -160,29 +149,63 @@ export class RegistrarfacturaComponent implements OnInit {
     });
   }
 
-  // onSelectionChanges(event: any, element: any) {
-  //   const selectedProduct = event.value;
-  //   element.selectedProducto = selectedProduct;
-  //   element.disabled = true;
+  // addData() {
+  //   if (this.prodcutosL.length >= 0) {
+  //     const producto = this.prodcutosL[0];
+
+  //     const nuevoProducto = {
+  //       cantidad: 1,
+  //       selectedProducto: producto,
+  //       nombre: producto.nombre,
+  //       precio: producto.precio,
+  //       codigo: producto.codigo,
+  //       disabled: false
+  //     };
+
+  //     this.dataSource.data = [...this.dataSource.data, nuevoProducto];
+
+  //     // Agregar el producto a la factura
+  //     this.facturaR.Productos.push({
+  //       CodigoProducto: producto.codigo,
+  //       NombreProducto: producto.nombre,
+  //       Precio: producto.precio,
+  //       Cantidad: 1,
+  //       SubtotalF: producto.precio
+  //     });
+  //   }
   // }
-
   addData() {
-    if (this.prodcutosL.length > 0) {
-      // Añadir el primer producto de la lista (puedes ajustar esto según sea necesario)
+    if (this.prodcutosL.length >= 0) {
       const producto = this.prodcutosL[0];
-
-      // Crear un nuevo objeto de producto para la tabla
+  
       const nuevoProducto = {
-        cantidad: 1, // Puedes ajustar la cantidad según sea necesario
+        cantidad: 1,
         selectedProducto: producto,
         nombre: producto.nombre,
         precio: producto.precio,
         codigo: producto.codigo,
-        disabled: false
+        disabled: false,
+        checked: false // Agrega el estado del checkbox
       };
-
-      // Añadir el producto a la dataSource
+  
       this.dataSource.data = [...this.dataSource.data, nuevoProducto];
+    }
+  }
+  
+  onProductChecked(event: any, element: any) {
+    element.checked = event.checked;
+    if (element.checked) {
+      // Agregar el producto a la factura
+      this.facturaR.Productos.push({
+        CodigoProducto: element.selectedProducto.codigo,
+        NombreProducto: element.selectedProducto.nombre,
+        Precio: element.selectedProducto.precio,
+        Cantidad: element.cantidad,
+        SubtotalF: element.selectedProducto.precio * element.cantidad
+      });
+    } else {
+      // Remover el producto de la factura
+      this.facturaR.Productos = this.facturaR.Productos.filter(p => p.CodigoProducto !== element.selectedProducto.codigo);
     }
   }
 
@@ -190,19 +213,74 @@ export class RegistrarfacturaComponent implements OnInit {
     // Remover el último producto añadido (puedes ajustar esto según sea necesario)
     const data = this.dataSource.data;
     if (data.length > 0) {
-      data.pop();
+      const removedProduct = data.pop();
       this.dataSource.data = data;
+  
+      // Asegúrate de que removedProduct está definido
+      if (removedProduct && removedProduct.selectedProducto) {
+        this.facturaR.Productos = this.facturaR.Productos.filter(p => p.CodigoProducto !== removedProduct.selectedProducto.codigo);
+      }
     }
   }
-  // calculateSubtotal(element: ElementoTabla): number {
-  //   return element.cantidad * element.selectedProducto.precio;
-  // }
-  onSelectionChanges(event: any, element: Element) {
-    element.selectedProducto = event.value;
+
+  onSelectionChanges(event: any, element: any) {
+    const selectedProduct = event.value;
+    element.selectedProducto = selectedProduct;
+  
+    // Calcular SubtotalF y redondear a dos decimales
+    const subtotalF = parseFloat((selectedProduct.precio * element.cantidad).toFixed(2));
+  
+    // Actualizar el producto en la factura
+    const index = this.facturaR.Productos.findIndex(p => p.CodigoProducto === element.selectedProducto.codigo);
+    if (index !== -1) {
+      this.facturaR.Productos[index] = {
+        CodigoProducto: selectedProduct.codigo,
+        NombreProducto: selectedProduct.nombre,
+        Precio: selectedProduct.precio,
+        Cantidad: element.cantidad,
+        SubtotalF: subtotalF
+      };
+    } else {
+      this.facturaR.Productos.push({
+        CodigoProducto: selectedProduct.codigo,
+        NombreProducto: selectedProduct.nombre,
+        Precio: selectedProduct.precio,
+        Cantidad: element.cantidad,
+        SubtotalF: subtotalF
+      });
+    }
   }
+
+  porcentajeIVG = 18;
+
   getSubtotal() {
-    return this.dataSource.data.reduce((acc, curr) => acc + (curr.cantidad * curr.selectedProducto.precio), 0);
+    const subtotal = this.dataSource.data.reduce((acc, curr) => acc + (curr.cantidad * curr.selectedProducto.precio), 0);
+    return parseFloat(subtotal.toFixed(2));
   }
+
+  calculateIGV() {
+    const igv = this.getSubtotal() * this.porcentajeIVG / 100;
+    return parseFloat(igv.toFixed(2));
+  }
+
+  calculateTotal() {
+    const total = this.getSubtotal() + this.calculateIGV();
+    return parseFloat(total.toFixed(2));
+  }
+
+  GuaradarFactura() {
+    this.facturaR.Subtotal = this.getSubtotal();
+    this.facturaR.Igv = this.calculateIGV();
+    this.facturaR.Total = this.calculateTotal();
+
+    console.log(this.facturaR);
+    // this.facturas.CrearFacturaAsync(this.facturaR).subscribe(resp => {
+    //   if (resp) {
+    //     console.log(resp);
+    //   }
+    // });
+  }
+
   goBack() {
     this.router.navigate(['home/documentos']);
   }
