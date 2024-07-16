@@ -13,7 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ProductosService } from 'src/app/Services/Prodcutos/productos.service';
 import { ProductoVMResponse } from 'src/app/Interface/Productos';
 import { FacturasService } from 'src/app/Services/Facturas/facturas.service';
-import { ProductoConEstado } from 'src/app/Interface/ProductosconEstado';
+import { Element, ElementoTabla, ProductoConEstado } from 'src/app/Interface/ProductosconEstado';
 
 @Component({
   selector: 'app-registrarfactura',
@@ -61,7 +61,7 @@ export class RegistrarfacturaComponent implements OnInit {
   };
 
   displayedColumns = ['position', 'name', 'weight', 'symbol'];
-  dataSource: MatTableDataSource<any>;
+  dataSource: MatTableDataSource<ElementoTabla>;
 
   constructor(
     private router: Router,
@@ -194,7 +194,15 @@ export class RegistrarfacturaComponent implements OnInit {
       this.dataSource.data = data;
     }
   }
-
+  // calculateSubtotal(element: ElementoTabla): number {
+  //   return element.cantidad * element.selectedProducto.precio;
+  // }
+  onSelectionChangess(event: any, element: Element) {
+    element.selectedProducto = event.value;
+  }
+  getSubtotal() {
+    return this.dataSource.data.reduce((acc, curr) => acc + (curr.cantidad * curr.selectedProducto.precio), 0);
+  }
   goBack() {
     this.router.navigate(['home/documentos']);
   }
