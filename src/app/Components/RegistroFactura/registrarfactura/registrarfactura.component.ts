@@ -34,7 +34,7 @@ export class RegistrarfacturaComponent implements OnInit {
     private router: Router,
     private clientes: ClienteService,
     private matDialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.ObtenerClientes();
@@ -65,19 +65,36 @@ export class RegistrarfacturaComponent implements OnInit {
     this.selectedClient = this.clienteL.find(cliente => cliente.rucDni === selectedRucDni);
   }
 
+  // onInputChange(event: any) {
+  //   const inputValue = event.target.value;
+  //   // Si no hay cliente seleccionado y el valor de entrada es válido, llama a setClientes
+  //   if (!this.selectedClient && inputValue && inputValue.length >= 10) {
+  //     // this.setClientes();
+  //     setTimeout(() => {
+  //       if (!this.selectedClient) {
+  //         this.setClientes(this.clienteReq);
+  //       }
+  //     }, 3000);
+  //   }
+  // }
+  setClientesCalled: boolean = false
   onInputChange(event: any) {
     const inputValue = event.target.value;
-    // Si no hay cliente seleccionado y el valor de entrada es válido, llama a setClientes
     if (!this.selectedClient && inputValue && inputValue.length >= 10) {
-      // this.setClientes();
-      setTimeout(() => {
-        if (!this.selectedClient) {
-          this.setClientes(this.clienteReq);
-        }
-      }, 3000);
+      if (!this.setClientesCalled) {
+        this.setClientesCalled = true; // Bandera para asegurar que solo se llame una vez
+        //this.setClientes(this.clienteReq);
+        setTimeout(() => {
+          if (!this.selectedClient) {
+            this.clienteReq.rucDni = inputValue
+            this.setClientes(this.clienteReq);
+          }
+        }, 3000);
+      }
+    } else {
+      this.setClientesCalled = false; // Reiniciar la bandera si el valor no cumple la condición
     }
   }
-
   setClientes(clienteReq: ClientesVM) {
     const dialogRef = this.matDialog.open(SetclientesComponent, {
       width: '450px',
