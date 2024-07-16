@@ -13,6 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ProductosService } from 'src/app/Services/Prodcutos/productos.service';
 import { ProductoVMResponse } from 'src/app/Interface/Productos';
 import { FacturasService } from 'src/app/Services/Facturas/facturas.service';
+import { ProductoConEstado } from 'src/app/Interface/ProductosconEstado';
 
 @Component({
   selector: 'app-registrarfactura',
@@ -24,7 +25,7 @@ export class RegistrarfacturaComponent implements OnInit {
   numeroFactura = "";
   myControl = new FormControl('');
   clienteL: ClienteResponse[] = [];
-  prodcutosL: ProductoVMResponse[] = [];
+  prodcutosL: ProductoConEstado[] = [];
 
   filteredOptions?: Observable<ClienteResponse[]>;
 
@@ -44,18 +45,19 @@ export class RegistrarfacturaComponent implements OnInit {
   facturaR: FacturaVMRequest = {
     IdFactura: 0,
     NumeroFactura: "",
-
     IdCliente: 0,
     Subtotal: 0,
     Igv: 0,
     Total: 0,
-
-    CodigoProducto: "",
-    NombreProducto: "",
-
-    Precio: 0,
-    Cantidad: 0,
-    SubtotalF: 0
+    Productos: [
+      {
+        CodigoProducto: "",
+        NombreProducto: "",
+        Precio: 0,
+        Cantidad: 0,
+        SubtotalF: 0
+      }
+    ]
   };
 
   displayedColumns = ['position', 'name', 'weight', 'symbol'];
@@ -100,8 +102,11 @@ export class RegistrarfacturaComponent implements OnInit {
   }
 
   ObtenerProductos() {
+    // this.products.getAllProductos().subscribe(resp => {
+    //   this.prodcutosL = resp.listProductos;
+    // });
     this.products.getAllProductos().subscribe(resp => {
-      this.prodcutosL = resp.listProductos;
+      this.prodcutosL = resp.listProductos.map((p: ProductoVMResponse) => ({ ...p, disabled: false }));
     });
   }
 
@@ -155,6 +160,12 @@ export class RegistrarfacturaComponent implements OnInit {
     });
   }
 
+  onSelectionChanges(event: any, element: any) {
+    const selectedProduct = event.value;
+    element.selectedProducto = selectedProduct;
+    element.disabled = true;
+  }
+
   addData() {
     if (this.prodcutosL.length > 0) {
       // Añadir el primer producto de la lista (puedes ajustar esto según sea necesario)
@@ -166,7 +177,8 @@ export class RegistrarfacturaComponent implements OnInit {
         selectedProducto: producto,
         nombre: producto.nombre,
         precio: producto.precio,
-        codigo: producto.codigo
+        codigo: producto.codigo,
+        disabled: false
       };
 
       // Añadir el producto a la dataSource

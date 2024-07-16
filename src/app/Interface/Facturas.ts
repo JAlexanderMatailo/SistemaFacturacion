@@ -1,21 +1,24 @@
 import { MensajesVM } from "./Mensajeria";
 
-export interface FacturaVMRequest {
-    IdFactura: number
-    NumeroFactura: string
+export interface FacturaVMRequest
+{
+    IdFactura : number
+    NumeroFactura : string
+    IdCliente : number
+    Subtotal : number
+    Igv : number
+    Total : number
 
-    IdCliente: number
-    Subtotal: number
-    Igv: number
-    Total: number
+    Productos : ProductoFacturaVM []
+}
 
-    CodigoProducto: string
-    NombreProducto: string
-
-    Precio: number
-    Cantidad: number
-    SubtotalF: number
-
+export interface ProductoFacturaVM
+{
+    CodigoProducto : string
+    NombreProducto : string
+    Precio : number
+    Cantidad : number 
+    SubtotalF : number
 }
 
 export interface FacturaResponse {
