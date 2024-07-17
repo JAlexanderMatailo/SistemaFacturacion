@@ -56,7 +56,6 @@ export class LoginComponent {
         // Maneja la respuesta exitosa aquí (e.g., almacenar el token, redirigir al usuario, etc.)
       },
       (error) => {
-        console.error("Login failed:", error);
         this.router.navigate(['/loggin']);
         // Maneja el error aquí (e.g., mostrar un mensaje de error)
       }

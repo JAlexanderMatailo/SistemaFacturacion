@@ -61,23 +61,18 @@ export class SetclientesComponent {
     this.matDialog.closeAll();
   }
   obtenerDatos() {
-    console.log("Llegó data: ", this.data);
     if (this.data != null) {
       // this.clienteReq = { ...this.data }; 
       this.clienteReq.idCliente = this.data.idCliente
       this.clienteReq.rucDni = this.data.rucDni
       this.clienteReq.nombre = this.data.nombre
       this.clienteReq.direccion = this.data.direccion
-      this.clienteReq.correo = this.data.correo
-      console.log("Data", this.clienteReq);
-      
+      this.clienteReq.correo = this.data.correo      
     }
   }
   SetProducto() {
 
     if (this.validarCampos()) {
-      console.log(this.clienteReq);
-      
       if(this.clienteReq.idCliente === 0){
         this.clientes.setClientes(this.clienteReq).subscribe(resp => {
           if (resp) {

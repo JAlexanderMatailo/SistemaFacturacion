@@ -110,9 +110,6 @@ export class ProductoComponent {
   }
 
   UpdateProducto(producto: ProductoVMRequest) {
-    //localStorage.setItem("usuario", JSON.stringify(person));
-    console.log("Data: ",producto);
-    
     const dialogRef = this.matDialog.open(SetproductosComponent, {
       width: '450px',
       height: '450px',
@@ -124,7 +121,6 @@ export class ProductoComponent {
     });
   }
   DeleteProducto(event: any) {
-    //alert(person.idContribuyente)
     this.productos.deleteProducto(event.idProducto).subscribe(resp => {
       if (resp) {
         Swal.fire({

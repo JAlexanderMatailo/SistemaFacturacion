@@ -84,8 +84,6 @@ export class ClientesComponent {
   }
 
   UpdateCliente(producto: SetclientesComponent) {
-    //localStorage.setItem("usuario", JSON.stringify(person));
-    console.log("Data: ",producto);
     
     const dialogRef = this.matDialog.open(SetclientesComponent, {
       width: '450px',
@@ -97,12 +95,7 @@ export class ClientesComponent {
       this.getClientes()
     });
   }
-  DeleteCliente(event: any) {
-    //alert(person.idContribuyente)log
-    console.log(event);
-    
-    console.log(event.idCliente);
-    
+  DeleteCliente(event: any) {    
     this.clientes.deleteCliente(event.idCliente).subscribe(resp => {
       if (resp =! null && resp.codigoResult ==200) {
         Swal.fire({

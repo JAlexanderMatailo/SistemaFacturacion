@@ -273,10 +273,8 @@ export class RegistrarfacturaComponent implements OnInit {
     this.facturaR.igv = this.calculateIGV();
     this.facturaR.total = this.calculateTotal();
 
-    console.log(this.facturaR);
     this.facturas.CrearFacturaAsync(this.facturaR).subscribe(resp => {
       if (resp) {
-        console.log(resp);
         this.goBack()
       }
     });

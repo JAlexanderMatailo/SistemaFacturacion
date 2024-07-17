@@ -61,7 +61,6 @@ export class SetproductosComponent {
     this.matDialog.closeAll();
   }
   obtenerDatos() {
-    console.log("Llegó data: ", this.data);
     if (this.data != null) {
       this.producto = { ...this.data }; // Copia los datos recibidos a producto
     }

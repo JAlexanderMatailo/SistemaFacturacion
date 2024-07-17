@@ -70,7 +70,6 @@ export class FacturasComponent implements OnInit, AfterViewInit {
   }
 
   verFactura(element: any) {
-    console.log("Data: ", element);
     const dialogRef = this.matDialog.open(PreviewfacturaComponent, {
       width: '560px',
       height: '824px',
