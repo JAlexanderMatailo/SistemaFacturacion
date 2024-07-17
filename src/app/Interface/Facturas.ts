@@ -1,72 +1,69 @@
 import { MensajesVM } from "./Mensajeria";
 
-export interface FacturaVMRequest
-{
-    IdFactura : number
-    NumeroFactura : string
-    IdCliente : number
-    Subtotal : number
-    Igv : number
-    Total : number
-
-    Productos : ProductoFacturaVM []
+export interface FacturaVMRequest {
+    idFactura: number;
+    numeroFactura: string;
+    idCliente: number;
+    subtotal: number;
+    igv: number;
+    total: number;
+    productos: ProductoFacturaVM[];
 }
 
-export interface ProductoFacturaVM
-{
-    CodigoProducto : string
-    NombreProducto : string
-    Precio : number
-    Cantidad : number 
-    SubtotalF : number
+export interface ProductoFacturaVM {
+    codigoProducto: string;
+    nombreProducto: string;
+    precio: number;
+    cantidad: number;
+    subtotalF: number;
 }
 
 export interface FacturaResponse {
-    Factura: FacturaVMRequest
-    Mensajeria: MensajesVM
+    factura: FacturaVMRequest;
+    mensajeria: MensajesVM;
 }
+
+export interface ItemsRespnseVM {
+    idItem: number;
+    idFactura: number;
+    codigoProducto: string;
+    nombreProducto: string;
+    precio: number;
+    cantidad: number;
+    subtotalF: number;
+}
+
 export interface FacturaVMResponse {
-    IdFactura: number
+    idFactura: number;
+    numeroFactura: string;
+    idCliente: number;
+    subtotal: number;
+    porcentajeIgv: number;
+    igv: number;
+    total: number;
+    activo: boolean;
+    fechaCreacion: Date;
+    items: ItemsRespnseVM[];
+    cliente: ClienteResponseVM;
+}
 
-    NumeroFactura: string
-
-    IdCliente: number
-    Nombre: string
-    Direccion: string
-    Correo: string
-    
-    Subtotal: number
-    PorcentajeIgv: number
-    Igv: number
-    Total: number
-
-    FechaCreacion: Date
-
-    Activo: boolean
-
-    IdItem: number
-
-    CodigoProducto: string
-    NombreProducto: string
-
-    Precio: number
-    Cantidad: number
-    SubtotalF: number
-
-    
-
+export interface ClienteResponseVM {
+    idCliente: number;
+    rucDni: string;
+    nombre: string;
+    direccion: string;
+    correo: string;
 }
 
 export interface ResultFactura extends MensajesVM {
-    FacturaList: FacturaVMResponse[]
+    facturaList: FacturaVMResponse[];
 }
 
-
 export interface Eliminacion {
-    IdFactura: number
-    NumeroFactura: string
+    idFactura: number;
+    numeroFactura: string;
 }
 
 export interface EliminacionFactura extends MensajesVM {
-    eliminar: Eliminacion
+    eliminar: Eliminacion;
 }

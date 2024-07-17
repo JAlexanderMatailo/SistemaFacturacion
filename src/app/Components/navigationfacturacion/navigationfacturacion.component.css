@@ -15,3 +15,9 @@
   top: 0;
   z-index: 1;
 }
+.logOut{
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  cursor: pointer;
+}

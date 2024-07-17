@@ -34,6 +34,7 @@ import { RegistrarfacturaComponent } from './Components/RegistroFactura/registra
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { NgFor } from '@angular/common';
+import { PreviewfacturaComponent } from './Components/Documentos/previewfactura/previewfactura.component';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { NgFor } from '@angular/common';
     SetclientesComponent,
     OnlyNumbersWithDecimalDirective,
     RegistrarfacturaComponent,
+    PreviewfacturaComponent,
     
   ],
   imports: [

@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, inject, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -9,56 +9,24 @@ import { Eliminacion, FacturaVMRequest, FacturaVMResponse } from 'src/app/Interf
 import { MensajesVM } from 'src/app/Interface/Mensajeria';
 import { FacturasService } from 'src/app/Services/Facturas/facturas.service';
 import Swal from 'sweetalert2'
+import { PreviewfacturaComponent } from '../previewfactura/previewfactura.component';
 
 @Component({
   selector: 'app-facturas',
   templateUrl: './facturas.component.html',
   styleUrls: ['./facturas.component.css']
 })
-export class FacturasComponent {
+export class FacturasComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['idFactura', 'numeroFactura', 'nombreCliente', 'codigoProducto', 'nombreProducto','Total', 'Acciones'];
+  displayedColumns: string[] = ['idFactura', 'numeroFactura', 'nombreCliente', 'total', 'codigoProducto', 'nombreProducto', 'acciones'];
+  innerDisplayedColumns: string[] = ['codigoProducto'];
+  innerDisplayedColumnsP: string[] = ['nombreProducto'];
   dataSource: MatTableDataSource<FacturaVMResponse>;
-
-  productoL: any [] = []
-
-  factura: FacturaVMResponse = {
-    IdFactura: 0,
-    NumeroFactura: "",
-
-    IdCliente: 0,
-    Subtotal: 0,
-    PorcentajeIgv: 0,
-    Igv: 0,
-    Total: 0,
-
-    FechaCreacion: new Date,
-
-    Activo: true,
-
-    IdItem: 0,
-
-    CodigoProducto: "",
-    NombreProducto: "",
-
-    Precio: 0,
-    Cantidad: 0,
-    SubtotalF: 0,
-
-    Nombre: "",
-    Direccion: "",
-    Correo: ""
-  }
-
-  mensajeria: MensajesVM = {
-    codigoResult: 0,
-    mensajeDescripcion: ""
-  }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor( private facturas : FacturasService,
+  constructor(private facturas: FacturasService,
     private matDialog: MatDialog,
     private router: Router
   ) {
@@ -67,6 +35,7 @@ export class FacturasComponent {
 
   ngOnInit(): void {
     this.getFacturas();
+    this.dataSource.filterPredicate = this.customFilterPredicate();
   }
 
   ngAfterViewInit() {
@@ -82,46 +51,52 @@ export class FacturasComponent {
       this.dataSource.paginator.firstPage();
     }
   }
-
-  getFacturas(){
-    this.facturas.getAllFacturas().subscribe(resp => {
-      this.productoL = resp.facturaList;
-      this.dataSource.data = this.productoL;
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      
-    })
-  }
-  setFacturas(){
+  setFacturas() {
     this.router.navigate(['home/factura']);
   }
-  
-eliminar : Eliminacion = {
-  IdFactura: 0,
-  NumeroFactura: ""
-}
-  DeleteFacturas(event: any) {
-    this.eliminar.IdFactura = event.idFactura
-    this.eliminar.NumeroFactura = event.numeroFactura
-    this.facturas.deleteFactura(this.eliminar).subscribe(resp => {
+  getFacturas() {
+    this.facturas.getAllFacturas().subscribe(resp => {
+      this.dataSource.data = resp.facturaList;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+  }
+
+  customFilterPredicate() {
+    return (data: FacturaVMResponse, filter: string): boolean => {
+      const dataStr = `${data.idFactura} ${data.numeroFactura} ${data.cliente.nombre} ${data.total}`;
+      return dataStr.toLowerCase().includes(filter);
+    };
+  }
+
+  verFactura(element: any) {
+    console.log("Data: ", element);
+    const dialogRef = this.matDialog.open(PreviewfacturaComponent, {
+      width: '560px',
+      height: '824px',
+      panelClass: 'fondo',
+      data: element
+    })
+    dialogRef.afterClosed().subscribe(() => {
+      this.getFacturas()
+    });
+  }
+
+  DeleteFacturas(element: any) {
+    this.facturas.deleteFactura({ IdFactura: element.idFactura, NumeroFactura: element.numeroFactura }).subscribe(resp => {
       if (resp) {
         Swal.fire({
           title: "Excelente!",
-          text: `${resp.mensajeDescripcion}: ${this.factura?.NumeroFactura }`,
+          text: `${resp.mensajeDescripcion}: ${element.numeroFactura}`,
           icon: "success",
           confirmButtonColor: "rgb(10, 83, 58)",
           confirmButtonText: "Aceptar",
           showCloseButton: true
         });
-        this.getFacturas()
+        this.getFacturas();
       } else {
-        this.mensajeria = resp
-          Swal.fire("Ups!", "Ubo un error al intentar eliminar: " + this.mensajeria.mensajeDescripcion, "error");
+        Swal.fire("Ups!", "Hubo un error al intentar eliminar: " + resp.mensajeDescripcion, "error");
       }
     });
   }
-  verFactura(event: any){
-
-  }
-  
 }

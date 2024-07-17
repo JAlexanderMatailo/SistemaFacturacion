@@ -43,13 +43,13 @@ export class RegistrarfacturaComponent implements OnInit {
     correo: "",
   };
   facturaR: FacturaVMRequest = {
-    IdFactura: 0,
-    NumeroFactura: "",
-    IdCliente: 0,
-    Subtotal: 0,
-    Igv: 0,
-    Total: 0,
-    Productos: []
+    idFactura: 0,
+    numeroFactura: "",
+    idCliente: 0,
+    subtotal: 0,
+    igv: 0,
+    total: 0,
+    productos: []
   };
 
   displayedColumns = ['position', 'name', 'weight', 'symbol'];
@@ -101,7 +101,7 @@ export class RegistrarfacturaComponent implements OnInit {
 
   ObtenerNumeroFactura() {
     this.facturas.ObtenerNumeroFactura().subscribe(resp => {
-      this.facturaR.NumeroFactura = this.numeroFactura = resp;
+      this.facturaR.numeroFactura = this.numeroFactura = resp;
     });
   }
 
@@ -114,7 +114,7 @@ export class RegistrarfacturaComponent implements OnInit {
     const selectedRucDni = event.option.value;
     this.selectedClient = this.clienteL.find(cliente => cliente.rucDni === selectedRucDni);
     if (this.selectedClient) {
-      this.facturaR.IdCliente = this.selectedClient.idCliente;
+      this.facturaR.idCliente = this.selectedClient.idCliente;
     }
   }
 
@@ -196,16 +196,16 @@ export class RegistrarfacturaComponent implements OnInit {
     element.checked = event.checked;
     if (element.checked) {
       // Agregar el producto a la factura
-      this.facturaR.Productos.push({
-        CodigoProducto: element.selectedProducto.codigo,
-        NombreProducto: element.selectedProducto.nombre,
-        Precio: element.selectedProducto.precio,
-        Cantidad: element.cantidad,
-        SubtotalF: element.selectedProducto.precio * element.cantidad
+      this.facturaR.productos.push({
+        codigoProducto: element.selectedProducto.codigo,
+        nombreProducto: element.selectedProducto.nombre,
+        precio: element.selectedProducto.precio,
+        cantidad: element.cantidad,
+        subtotalF: element.selectedProducto.precio * element.cantidad
       });
     } else {
       // Remover el producto de la factura
-      this.facturaR.Productos = this.facturaR.Productos.filter(p => p.CodigoProducto !== element.selectedProducto.codigo);
+      this.facturaR.productos = this.facturaR.productos.filter(p => p.codigoProducto !== element.selectedProducto.codigo);
     }
   }
 
@@ -218,7 +218,7 @@ export class RegistrarfacturaComponent implements OnInit {
   
       // Asegúrate de que removedProduct está definido
       if (removedProduct && removedProduct.selectedProducto) {
-        this.facturaR.Productos = this.facturaR.Productos.filter(p => p.CodigoProducto !== removedProduct.selectedProducto.codigo);
+        this.facturaR.productos = this.facturaR.productos.filter(p => p.codigoProducto !== removedProduct.selectedProducto.codigo);
       }
     }
   }
@@ -231,22 +231,22 @@ export class RegistrarfacturaComponent implements OnInit {
     const subtotalF = parseFloat((selectedProduct.precio * element.cantidad).toFixed(2));
   
     // Actualizar el producto en la factura
-    const index = this.facturaR.Productos.findIndex(p => p.CodigoProducto === element.selectedProducto.codigo);
+    const index = this.facturaR.productos.findIndex(p => p.codigoProducto === element.selectedProducto.codigo);
     if (index !== -1) {
-      this.facturaR.Productos[index] = {
-        CodigoProducto: selectedProduct.codigo,
-        NombreProducto: selectedProduct.nombre,
-        Precio: selectedProduct.precio,
-        Cantidad: element.cantidad,
-        SubtotalF: subtotalF
+      this.facturaR.productos[index] = {
+        codigoProducto: selectedProduct.codigo,
+        nombreProducto: selectedProduct.nombre,
+        precio: selectedProduct.precio,
+        cantidad: element.cantidad,
+        subtotalF: subtotalF
       };
     } else {
-      this.facturaR.Productos.push({
-        CodigoProducto: selectedProduct.codigo,
-        NombreProducto: selectedProduct.nombre,
-        Precio: selectedProduct.precio,
-        Cantidad: element.cantidad,
-        SubtotalF: subtotalF
+      this.facturaR.productos.push({
+        codigoProducto: selectedProduct.codigo,
+        nombreProducto: selectedProduct.nombre,
+        precio: selectedProduct.precio,
+        cantidad: element.cantidad,
+        subtotalF: subtotalF
       });
     }
   }
@@ -269,16 +269,17 @@ export class RegistrarfacturaComponent implements OnInit {
   }
 
   GuaradarFactura() {
-    this.facturaR.Subtotal = this.getSubtotal();
-    this.facturaR.Igv = this.calculateIGV();
-    this.facturaR.Total = this.calculateTotal();
+    this.facturaR.subtotal = this.getSubtotal();
+    this.facturaR.igv = this.calculateIGV();
+    this.facturaR.total = this.calculateTotal();
 
     console.log(this.facturaR);
-    // this.facturas.CrearFacturaAsync(this.facturaR).subscribe(resp => {
-    //   if (resp) {
-    //     console.log(resp);
-    //   }
-    // });
+    this.facturas.CrearFacturaAsync(this.facturaR).subscribe(resp => {
+      if (resp) {
+        console.log(resp);
+        this.goBack()
+      }
+    });
   }
 
   goBack() {

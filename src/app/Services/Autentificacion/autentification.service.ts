@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/app/Environments/environment.development';
 import { ResultUsersLogin, UsuarioR, UsuariosVMResponse } from 'src/app/Interface/Users';
+import Swal from 'sweetalert2'
 
 @Injectable({
   providedIn: 'root'
@@ -33,9 +34,14 @@ constructor(private http : HttpClient) { }
       response.subscribe(
         (response: ResultUsersLogin) => {
           this.user = response
-          this.usuRH = this.user.usuario
+          if(this.user.codigoResult == 200){
+            this.usuRH = this.user.usuario
           
-          this.setToken();
+            this.setToken();
+          }else{
+            Swal.fire("Ups!", "Hubo un error: " + this.user.mensajeDescripcion, "error");
+          }
+          
         }
       )
       
@@ -47,16 +53,10 @@ constructor(private http : HttpClient) { }
     this.clearToken();
   }
   setToken(): void {
-    /*localStorage.setItem('token', this.usuRH.token)
-    localStorage.setItem('rol', this.usuRH.Rol)
-    localStorage.setItem('usuario', this.usuRH.Usuario)*/
     sessionStorage.setItem('token', this.usuRH.token)
     sessionStorage.setItem('usuario', this.usuRH.nombreUsuario)
   }
   clearToken(): void {
-    /*localStorage.removeItem('token');
-    localStorage.removeItem('rol');
-    localStorage.removeItem('usuario');*/
     sessionStorage.removeItem('token')
     sessionStorage.removeItem('usuario')
   }

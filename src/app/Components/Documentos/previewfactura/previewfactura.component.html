@@ -1,0 +1,96 @@
+<div class="masterContainer">
+    <div class="Content">
+        <div class="headerContent">
+            <div class="items">
+                <img src="./assets/logo.png" style="width: 75px;">
+                <h1 class="tittle">Factura</h1>
+                <h1 class="Secuencial">N° {{data.numeroFactura}}</h1>
+            </div>
+        </div>
+        <div class="Container">
+            <div class="header">
+                <div class="dataClient">
+                    <table>
+                        <td style="padding: 0;">
+                            <tr>
+                                <th>Ruc del cliente *: </th>
+                            </tr>
+                            <tr>
+                                <th>Razón Social del cliente *:</th>
+                            </tr>
+                            <tr>
+                                <th>Direccion:</th>
+                            </tr>
+                            <tr>
+                                <th>Correo</th>
+                            </tr>
+                        </td>
+
+                        <td>
+                            <tr>
+                                <td>{{ data.cliente.rucDni }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ data.cliente.nombre }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ data.cliente.direccion }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ data.cliente.correo }}</td>
+                            </tr>
+                        </td>
+
+                    </table>
+                </div>
+            </div>
+            <div class="body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Detalle/Descripcion</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
+                            <th>Subtotal C/U</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of data.items">
+                            <td>{{item.codigoProducto}}</td>
+                            <td>{{item.nombreProducto}}</td>
+                            <td>{{item.cantidad}}</td>
+                            <td>{{item.precio}}</td>
+                            <td>{{item.subtotalF}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3"></td>
+                            <th>Subtotal</th>
+                            <td>{{data.subtotal}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"></td>
+                            <th>Porcentaje Igv</th>
+                            <td>{{data.porcentajeIgv + "%"}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"></td>
+                            <th>IGV</th>
+                            <td>{{data.igv}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"></td>
+                            <th>Total</th>
+                            <td>{{data.total}}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="Footer">
+
+            </div>
+        </div>
+    </div>
+</div>

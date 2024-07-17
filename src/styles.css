@@ -46,3 +46,7 @@ color: rgba(24, 127, 158, 0.356) !important;
     width: 100%;
     color: #61afb9;;
   }
+
+  .mat-sort-header-container{
+    justify-content: center;
+  }

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ResultUsersLogin, UsuarioR, UsuariosVMResponse } from 'src/app/Interface/Users';
 import { AutentificationService } from 'src/app/Services/Autentificacion/autentification.service';
 import { MyErrorStateMatcher } from 'src/app/Shared/ErrorStament';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-login',
@@ -38,12 +39,17 @@ export class LoginComponent {
   public validarFormulario() {
     this.autSv.loginSession(this.usuario).subscribe(
       (response: ResultUsersLogin) => {
-        var token = this.autSv.checkToken();
-        if (token) {
-          
-          if (response && response.usuario.token) {
+        if (response.codigoResult == 200) {
+          var token = this.autSv.checkToken();
+          if (token) {
+
+            if (response && response.usuario.token) {
               this.router.navigate(['/home']);
+            }
+          } else {
+            Swal.fire("Ups!", "Ubo un error: " + response.mensajeDescripcion, "error");
           }
+
         } else {
           this.router.navigate(['/loggin']);
         }
