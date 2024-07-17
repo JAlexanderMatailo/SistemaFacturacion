@@ -133,9 +133,9 @@
 
                 </table>
 
-                <button mat-raised-button (click)="GuaradarFactura()" class="demo-button">
+                <button mat-raised-button (click)="GuaradarFactura()" class="demo-button" [disabled]="!isFacturaValid()">
                     Generar Factura
-                 </button>
+                </button>
             </div>
 
             

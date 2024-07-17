@@ -283,4 +283,11 @@ export class RegistrarfacturaComponent implements OnInit {
   goBack() {
     this.router.navigate(['home/documentos']);
   }
+  isFacturaValid(): boolean {
+    return this.facturaR.numeroFactura !== "" && 
+           this.facturaR.idCliente > 0 &&
+           this.dataSource.data.length > 0 &&
+           this.facturaR.productos.length > 0 &&
+           this.facturaR.productos.every(producto => producto.cantidad >= 1);
+  }
 }
