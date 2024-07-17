@@ -113,16 +113,16 @@ export class SetclientesComponent {
   }
   validarCampos() {
     if (!this.clienteReq.rucDni || this.clienteReq.rucDni.trim() === '') {
-      Swal.fire("Ups!", "Agregue el código del producto", "error");
+      Swal.fire("Ups!", "Agregue el RUC/DNI del cliente", "error");
       return false;
     } else if (!this.clienteReq.nombre || this.clienteReq.nombre.trim() === '') {
-      Swal.fire("Ups!", "Ingrese el detalle del producto", "error");
+      Swal.fire("Ups!", "Ingrese el nombre del cliente", "error");
       return false;
     } else if (!this.clienteReq.direccion || this.clienteReq.direccion.trim() === '') {
-      Swal.fire("Ups!", "Ingrese el precio del producto", "error");
+      Swal.fire("Ups!", "Ingrese la direccion del cliente", "error");
       return false;
     } else if (!this.clienteReq.correo || this.clienteReq.correo.trim() === '') {
-      Swal.fire("Ups!", "Verifique que la fecha sea la correcta", "error");
+      Swal.fire("Ups!", "Verifique el correo", "error");
       return false;
     } else {
       return true;
